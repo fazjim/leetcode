@@ -1,0 +1,41 @@
+import java.util.LinkedList;
+
+class Item {
+    int key;
+    int value;
+}
+public class LRUCache {
+    private int capacity;
+    private LinkedList<Item> list;
+    
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        list = new LinkedList<Item>();
+    }
+    
+    public int get(int key) {
+        for(Item item: list) {
+            if(item.key == key) {
+                int value = item.value;
+                Item newItem = new Item();
+                newItem.key = key;
+                newItem.value = value;
+                list.remove(item);
+                list.add(newItem);
+                return value;
+            }
+        }
+        return -1;
+    }
+    
+    public void set(int key, int value) {
+        if(capacity == 0) return;
+        if(list.size() == capacity) {
+            list.remove(0);
+        }
+        Item newItem = new Item();
+        newItem.key = key;
+        newItem.value = value;
+        list.add(newItem);
+    }
+}
