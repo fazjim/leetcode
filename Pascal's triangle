@@ -1,0 +1,24 @@
+public class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        if(numRows == 0){
+            return new ArrayList<List<Integer>>();
+        } else if(numRows == 1) {
+            List<Integer> list = new ArrayList<Integer>();
+            list.add(1);
+            List<List<Integer>> allList = new ArrayList<List<Integer>>();
+            allList.add(list);
+            return allList;
+        } else {
+            List<List<Integer>> oldList = generate(numRows-1);
+            List<Integer> lastList = oldList.get(oldList.size()-1);
+            List<Integer> newList = new ArrayList<Integer>();
+            newList.add(1);
+            for(int i = 0;i<lastList.size()-1;i++) {
+                newList.add(lastList.get(i)+lastList.get(i+1));
+            }
+            newList.add(1);
+            oldList.add(newList);
+            return oldList;
+        }
+    }
+}
