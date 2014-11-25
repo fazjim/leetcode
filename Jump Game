@@ -1,0 +1,16 @@
+public class Solution {
+    public boolean canJump(int[] A) {
+        int end = A.length-1;
+        int current = 0;
+        int next = 0;
+        
+        while(current <= next) {
+            int jump = A[current];
+            int tmp = current + jump;
+            next = tmp>next?tmp:next;
+            if(next>=end) return true;
+            current++;
+        }
+        return false;
+    }
+}
