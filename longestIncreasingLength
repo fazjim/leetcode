@@ -1,0 +1,61 @@
+public class Solution {
+    public int longestIncreasingPath(int[][] matrix) {
+        int rowLength = matrix.length;
+        if(rowLength == 0) return 0;
+        int colLength = matrix[0].length;
+        int[][] lengthMatrix = new int[rowLength][colLength];
+        for(int i = 0;i<rowLength;i++) {
+            for(int j = 0;j<colLength;j++) {
+                lengthMatrix[i][j] = 0;
+            }
+        }
+        
+        int max = 0;
+        for(int i = 0;i<rowLength;i++) {
+            for(int j = 0;j<colLength;j++) {
+                int val = getLength(matrix,i,j,lengthMatrix);
+                if(val>max) {
+                    max = val;
+                }
+            }
+        }
+        return max+1; //count itself
+    }
+    
+    public int getLength(int[][] matrix, int i, int j, int[][] lengthMatrix) {
+        //has been visited before
+        if(lengthMatrix[i][j]>0) return lengthMatrix[i][j];
+        else if(lengthMatrix[i][j]==-1) return 0;
+        else {
+            int moveUp = 0;
+            int moveDown = 0;
+            int moveLeft = 0;
+            int moveRight = 0;
+            int rowLength = matrix.length;
+            int columnLength = matrix[0].length;
+            //not visited
+            if((i-1>=0) && matrix[i-1][j]>matrix[i][j]) {
+                moveUp = getLength(matrix, i-1,j,lengthMatrix)+1;
+            }
+            if((i+1<rowLength) && matrix[i+1][j]>matrix[i][j]) {
+                moveDown = getLength(matrix,i+1,j,lengthMatrix)+1;
+            }
+            if((j-1>=0) && matrix[i][j-1]>matrix[i][j]) {
+                moveLeft = getLength(matrix, i,j-1,lengthMatrix)+1;
+            }
+            if((j+1<columnLength) && matrix[i][j+1]>matrix[i][j]) {
+                moveRight = getLength(matrix,i,j+1,lengthMatrix)+1;
+            }
+        
+            int longestVal = moveUp;
+            if(moveDown>longestVal) longestVal = moveDown;
+            if(moveLeft>longestVal) longestVal = moveLeft;
+            if(moveRight>longestVal) longestVal = moveRight;
+            if(longestVal == 0) 
+                lengthMatrix[i][j] = -1; //cannot increase, mark visited
+            else 
+                lengthMatrix[i][j] = longestVal;
+            return longestVal;
+        }
+    }
+}
