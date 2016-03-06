@@ -11,8 +11,14 @@ public class Solution {
         ListNode result = null;
         ListNode temp = null;
         int addUp = 0;
-        while(l1!=null&&l2!=null) {
-            int val = l1.val + l2.val;
+        boolean l1End = false;
+        boolean l2End = false;
+        if(l1 == null) l1End = true;
+        if(l2 == null) l2End = true;
+        while(!(l1End && l2End)) {
+            int val = 0;
+            if(!l1End) val += l1.val;
+            if(!l2End) val += l2.val;
             val = val + addUp;
             if(val>=10) {
                 val = val - 10;
@@ -28,26 +34,12 @@ public class Solution {
                 temp.next = newNode;
                 temp = newNode;
             }
+            if(!l1End)
             l1 = l1.next;
+            if(!l2End)
             l2 = l2.next;
-        }
-        
-        ListNode restNode;
-        if(l1!=null) restNode = l1;
-        else restNode = l2; 
-
-        while(restNode!=null) {
-            int val = restNode.val + addUp;
-            if(val>=10) {
-                val = val - 10;
-                addUp = 1;
-            } else {
-                addUp = 0;
-            }
-            ListNode newNode = new ListNode(val);
-            temp.next = newNode;
-            temp = newNode;
-            restNode = restNode.next;
+            if(l1==null) l1End = true;
+            if(l2==null) l2End = true;
         }
         
         if(addUp == 1) {
