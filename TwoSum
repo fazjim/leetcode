@@ -6,27 +6,13 @@ public class Solution {
         Hashtable<Integer, Integer> numIndex = new Hashtable<Integer, Integer>();
         for(int i = 0;i<nums.length;i++) {
             int val = nums[i];
-            if(numIndex.containsKey(val)) {
-                if(val*2 == target) {
-                    results[0] = numIndex.get(val);
-                    results[1] = i;
-                    return results;
-                }  
+            int searchVal = target-val;
+            if(numIndex.containsKey(searchVal)) {
+                results[0] = numIndex.get(searchVal);
+                results[1] = i;
+                return results;
             } else {
                 numIndex.put(nums[i],i);
-            }
-        }
-        
-      
-        for(int i = 0;i<nums.length;i++) {
-            int val = target-nums[i];
-            if(numIndex.containsKey(val)) {
-                int index = numIndex.get(val);
-                if(i!=index) {
-                    results[0] = i;
-                    results[1] = index;
-                    return results;
-                }
             }
         }
         return results;
