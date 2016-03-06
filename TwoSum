@@ -1,0 +1,34 @@
+import java.util.Hashtable;
+
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] results = new int[2];
+        Hashtable<Integer, Integer> numIndex = new Hashtable<Integer, Integer>();
+        for(int i = 0;i<nums.length;i++) {
+            int val = nums[i];
+            if(numIndex.containsKey(val)) {
+                if(val*2 == target) {
+                    results[0] = numIndex.get(val);
+                    results[1] = i;
+                    return results;
+                }  
+            } else {
+                numIndex.put(nums[i],i);
+            }
+        }
+        
+      
+        for(int i = 0;i<nums.length;i++) {
+            int val = target-nums[i];
+            if(numIndex.containsKey(val)) {
+                int index = numIndex.get(val);
+                if(i!=index) {
+                    results[0] = i;
+                    results[1] = index;
+                    return results;
+                }
+            }
+        }
+        return results;
+    }
+}
