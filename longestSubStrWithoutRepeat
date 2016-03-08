@@ -1,3 +1,5 @@
+//To improve the performance, use the character->integer table to avoid the cost of Hashtable
+
 import java.util.Hashtable;
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
