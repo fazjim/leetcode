@@ -1,0 +1,22 @@
+import java.util.Hashtable;
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        Hashtable<Character,Integer> chars = new Hashtable<Character,Integer>();
+        int longestLength = 0;
+        int currLength = 0;
+        int lastConflict = 0;
+        for(int i = 0;i<s.length();i++) {
+            char c = s.charAt(i);
+            if(chars.containsKey(c)) {
+                int lastC = chars.get(c);
+                int length = i-lastConflict;   //i - 1 - lastConflict + 1
+                if(length>longestLength) longestLength = length;
+                if(lastC+1>lastConflict) lastConflict = lastC+1;
+            } 
+            chars.put(c,i);
+        }
+        int endLength = s.length()-lastConflict; //length-1 - lastConflict +1
+        if(endLength>longestLength) longestLength = endLength;
+        return longestLength;
+    }
+}
