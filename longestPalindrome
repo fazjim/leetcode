@@ -1,0 +1,53 @@
+public class Solution {
+    public String longestPalindrome(String s) {
+        //s less than 1000, so supports expanding at each spot
+        int max = 0;
+        int loc = 0;
+        for(int i = 0;i<s.length();i++) {
+            int val = getPalindromeLength(s,i);
+            if(val>max) {
+                max = val;
+                loc = i;
+            }
+        }
+        int width = max/2;
+        if(max%2 == 1){
+            //centroid
+            return s.substring(loc-width, loc+width+1);
+        } else {
+            return s.substring(loc-width+1,loc+width+1);
+        }
+    }
+    
+    public int getPalindromeLength(String s, int index) {
+        int left = index-1;
+        int right = index+1;
+        int centroidLength = 0;
+        while(left>=0&& right<=s.length()-1) {
+            if(s.charAt(left)==s.charAt(right)) {
+                centroidLength++;
+            } else {
+                break;
+            }
+            left--;
+            right++;
+        }
+        centroidLength = centroidLength*2+1;
+        
+        int nocenterLength = 0;
+        right = index+1;
+        while(index>=0&&right<=s.length()-1) {
+            if(s.charAt(index)==s.charAt(right)){
+                nocenterLength++;
+            } else {
+                break;
+            }
+            index--;
+            right++;
+        }
+        nocenterLength *= 2;
+        
+        if(centroidLength>nocenterLength) return centroidLength;
+        else return nocenterLength;
+    }
+}
