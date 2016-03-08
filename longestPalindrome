@@ -1,3 +1,4 @@
+//dynmaic programming may improve the results, consider table[i][j] representing the results of string i to j
 public class Solution {
     public String longestPalindrome(String s) {
         //s less than 1000, so supports expanding at each spot
