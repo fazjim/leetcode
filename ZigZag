@@ -1,0 +1,25 @@
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows == 1) return s;
+        String[] arrs = new String[numRows];
+        for(int i = 0;i<numRows;i++) {
+            arrs[i] = "";
+        }
+        int upper = numRows*2-2;
+        for(int i = 0;i<s.length();i++) {
+            int index = i%upper;
+            if(index>numRows-1) {
+                int adjustedIndex = numRows*2 - index - 2; //numRows - 1 - 1  - (index - numRows)
+                arrs[adjustedIndex] = arrs[adjustedIndex] + s.charAt(i);
+            } else {
+                arrs[index] = arrs[index] + s.charAt(i);
+            }
+        }
+        
+        String result = "";
+        for(int i = 0;i<numRows;i++) {
+            result += arrs[i];
+        }
+        return result;
+    }
+}
