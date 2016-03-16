@@ -1,0 +1,35 @@
+public class Solution {
+    public int myAtoi(String str) {
+        int val = 0;
+        int start = 0;
+        str = str.trim();
+        if(str == null||str.length()==0) return 0;
+        boolean isNeg = false;
+        boolean startCount = false;
+        int i = 0;
+       while (i<str.length()) {
+            int temp = (int)str.charAt(i) - 48;
+            if(temp<0||temp>9) {
+                if(startCount==false && temp == -5) {
+                    isNeg = false;
+                } else if (startCount == false && temp == -3){
+                    isNeg = true;
+                } else {
+                    if(isNeg) val = -val;
+                    return val;
+                }
+                if(startCount == false) startCount = true;
+            } else {
+                if(startCount == false) startCount = true;
+                if(val > (Integer.MAX_VALUE - temp)/10) {
+                    if(isNeg) return Integer.MIN_VALUE;
+                    return Integer.MAX_VALUE;
+                }
+                val = val * 10 + temp;
+            }
+            i++;
+        }
+        if(isNeg) val = -val;
+        return val;
+    }
+}
