@@ -1,25 +1,51 @@
+//using stringbuilder will be much faster than adding strings
 public class Solution {
     public String convert(String s, int numRows) {
         if(numRows == 1) return s;
-        String[] arrs = new String[numRows];
+        StringBuilder[] arrs = new StringBuilder[numRows];
         for(int i = 0;i<numRows;i++) {
-            arrs[i] = "";
+            arrs[i] = new StringBuilder();
         }
         int upper = numRows*2-2;
         for(int i = 0;i<s.length();i++) {
             int index = i%upper;
             if(index>numRows-1) {
                 int adjustedIndex = numRows*2 - index - 2; //numRows - 1 - 1  - (index - numRows)
-                arrs[adjustedIndex] = arrs[adjustedIndex] + s.charAt(i);
+                arrs[adjustedIndex].append(s.charAt(i));
             } else {
-                arrs[index] = arrs[index] + s.charAt(i);
+                arrs[index].append(s.charAt(i));
             }
         }
         
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for(int i = 0;i<numRows;i++) {
-            result += arrs[i];
+            result.append(arrs[i].toString());
         }
-        return result;
+        return result.toString();
     }
 }
+
+
+//another version
+public class Solution {
+    public String convert(String s, int numRows) {
+        int allLength = s.length();
+        StringBuilder newResult = new StringBuilder();
+        int circle = 2*numRows-2;
+        
+        if(numRows == 1||allLength<=numRows) return s;
+        
+        for(int i = 0;i<numRows;i++) {
+            for(int j = i;j<allLength;j+=circle) {
+                newResult.append(s.charAt(j));
+                if(i!=0&&i!=numRows-1) {
+                    int middle = j + circle - i*2;
+                    if(middle < allLength)
+                    newResult.append(s.charAt(middle));
+                }
+            }
+        }
+        return newResult.toString();
+    }
+}
+
