@@ -1,0 +1,37 @@
+public class Solution {
+    public int reverse(int x) {
+        if(x<0) {
+            if(x==Integer.MIN_VALUE) return 0;
+            return -reverse(-x);
+        }
+        int val = 0;
+        while(x>0) {
+            int digit = x%10;
+            x = x/10;
+            if(val > (Integer.MAX_VALUE - digit) / 10) return 0;
+            val = val * 10 + digit;
+        }
+        return val;
+        //return reverseStr(x);
+    }
+    
+    public int reverseStr(int x) {
+        String xStr = Integer.toString(x);
+        int start = 0;
+        StringBuilder str = new StringBuilder();
+        if(xStr.startsWith("-")) {
+            start = 1;
+            str.append('-');
+        }
+        for(int i = xStr.length()-1;i>=start;i--) {
+            str.append(xStr.charAt(i));
+        }
+        int val = 0;
+        try {
+            val = Integer.parseInt(str.toString());     
+        } catch(Exception exp){
+            
+        }
+        return val;
+    }
+}
