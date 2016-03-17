@@ -1,0 +1,27 @@
+public class Solution {
+    public boolean isPalindrome(int x) {
+        return isPalindromeStr(x);
+        /*if(x<0) return false;
+        int reverseX = 0;
+        int xCopy = x;
+        while(xCopy>0) {
+            reverseX = reverseX * 10 + xCopy%10;
+            xCopy = xCopy / 10;
+        }
+        if(reverseX == x) return true;
+        return false;*/
+    }
+    
+    public boolean isPalindromeStr(int x) {
+        if(x<0) return false;
+        String xStr = Integer.toString(x);
+        int start = 0; 
+        int end = xStr.length()-1;
+        while(start<=end){
+            if(xStr.charAt(start)!=xStr.charAt(end)) return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+}
