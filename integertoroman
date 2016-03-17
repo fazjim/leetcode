@@ -1,88 +1,22 @@
-//methods can be simplified
 public class Solution {
     //1: I  2:II 3:III 4: IV 5: V 6:VI 7:VII 8. VIII 9. IX 10 X
+    //can also use recursion, which might be slower
     public String intToRoman(int num) {
-        char symbol1 = 'I';
-        char symbol5 = 'V';
-        char symbol10 = 'X';
-        char symbol50 = 'L';
-        char symbol100 = 'C';
-        char symbol500 = 'D';
-        char symbol1000 = 'M';
-        
+        int[] vals = {1000,900,500,400,100,90,50,40,10,9,5,4, 1};
+        String[] romans = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
         int val = num;
         StringBuffer str = new StringBuffer();
-        while(val!=0) {
-            if(val>=1000) {
-                int cnt = val/1000;
-                for(int i = 0;i<cnt;i++) {
-                    str.append(symbol1000);
+        for(int i = 0;i<vals.length;i++) {
+            int unit = vals[i];
+            if(val>=unit) {
+                int digit = val/unit;
+                for(int j = 0;j<digit;j++) {
+                    str.append(romans[i]);
                 }
-                val = val % 1000;
-            } else if(val >= 500) {
-                if(val >= 900) {
-                    str.append(symbol100);
-                    str.append(symbol1000);
-                    val = val - 900;
-                } else {
-                    str.append(symbol500);
-                    val = val - 500;
-                }
-            } else if(val >= 100) {
-                if(val >= 400) {
-                    str.append(symbol100);
-                    str.append(symbol500);
-                    val = val - 400;
-                } else {
-                    int cnt = val/100;
-                    for(int i = 0;i<cnt;i++) {
-                        str.append(symbol100);
-                    }
-                    val = val % 100;
-                }
-            } else if(val >= 50) {
-                if(val>=90) {
-                    str.append(symbol10);
-                    str.append(symbol100);
-                    val = val - 90;
-                } else {
-                    str.append(symbol50);
-                    val = val - 50;
-                }
-            } else if(val >= 10) {
-                if(val >= 40) {
-                    str.append(symbol10);
-                    str.append(symbol50);
-                    val = val - 40;
-                } else {
-                    int cnt = val/10;
-                    for(int i = 0;i<cnt;i++) {
-                        str.append(symbol10);
-                    }
-                    val = val % 10;
-                }
-            } else if(val>= 5) {
-                if(val>=9) {
-                    str.append(symbol1);
-                    str.append(symbol10);
-                    val = val - 9;
-                } else {
-                    str.append(symbol5);
-                    val = val - 5;
-                }
-            } else {
-                if(val == 4) {
-                    str.append(symbol1);
-                    str.append(symbol5);
-                    val = 0;
-                } else {
-                    for(int i = 0;i<val;i++) {
-                        str.append(symbol1);
-                    }
-                    val = 0;
-                }
+                val = val%unit;
             }
         }
+        
         return str.toString();
     }
 }
