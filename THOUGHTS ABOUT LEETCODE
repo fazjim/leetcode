@@ -3,3 +3,4 @@ THOUGHTS ABOUT LEETCODE
 1.  If too much time complexity from one side, try binary split or merge from sides. (container with water)
 2.  Corner cases:
   a) Integer.MAX_VALUE, Integer.MIN_VALUE   judge if over   x >  (Integer.MAX_VALUE- y) / z
+3.  Sometimes for easy cases, code lookup will be faster than writing the logic judgements (integer to roman)
