@@ -4,3 +4,4 @@ THOUGHTS ABOUT LEETCODE
 2.  Corner cases:
   a) Integer.MAX_VALUE, Integer.MIN_VALUE   judge if over   x >  (Integer.MAX_VALUE- y) / z
 3.  Sometimes for easy cases, code lookup will be faster than writing the logic judgements (integer to roman)
+4.  Ideas of KMP:  build a prefix and postfix table and use the match to increase the strides for moving
