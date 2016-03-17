@@ -1,0 +1,31 @@
+public class Solution {
+    public int maxArea(int[] height) {
+       int length = height.length;
+       if(length <= 1) return 0;
+       int left = 0; 
+       int right = length-1;
+       int maxArea = 0;
+       while(left<right) {
+           int hLeft = height[left];
+           int hRight = height[right];
+           int tempValue = 0;
+           if(hLeft>hRight) {
+               tempValue = hRight * (right-left);
+               while(right>left && height[right]<=hRight) {
+                   right--;
+               }
+           } else if(hLeft < hRight) {
+               tempValue = hLeft * (right - left);
+               while(right> left && height[left]<=hLeft) {
+                   left++;
+               }
+           } else if(hLeft == hRight) {
+               tempValue = hLeft * (right-left);
+               while(right > left && height[left]<=hLeft) left++;
+               while(right > left && height[right]<=hRight) right--;
+           }
+           if(tempValue > maxArea) maxArea = tempValue;
+       }
+       return maxArea;
+    }
+}
