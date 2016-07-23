@@ -6,3 +6,4 @@ THOUGHTS ABOUT LEETCODE
 3.  Sometimes for easy cases, code lookup will be faster than writing the logic judgements (integer to roman)
 4.  Ideas of KMP:  build a prefix and postfix table and use the match to increase the strides for moving
 5.  ListNode, find a position, using fast and slow pointers
+6.  Use of heap/PriorityQueue for n-best problems
