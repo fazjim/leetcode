@@ -10,3 +10,4 @@ THOUGHTS ABOUT LEETCODE
 7.  Be careful of the overflow cases, for example (a+b)/2, but a+b may overflow, calculate mid as int mid = low + (high - low) / 2(Refer to 2)
 8. bitwise operation: ^ XOR,  & and , | or,   << (0010 -> 0100)   >> (0010 -> 0001)
 9.  StringBuffer for string operation, setCharAt for changing character
+10. to boost program speed, for characters such as "1" , "2", use "1"-'0' to get its index and use the array to avoid the use of Hashtable
