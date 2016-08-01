@@ -12,29 +12,12 @@ public class Solution {
             }
         }
         for(int num2: nums2) {
-            if(num2Count.containsKey(num2)) {
-                num2Count.put(num2, num2Count.get(num2)+1);
-            } else {
-                num2Count.put(num2, 1);
-            }
+            if(num1Count.containsKey(num2) && num1Count.get(num2)>0) {
+                num1Count.put(num2, num1Count.get(num2)-1);
+                allNums.add(num2);
+            } 
         }
-        Iterator<Integer> it = num1Count.keySet().iterator();
-        while(it.hasNext()) {
-            int num = it.next();
-            if(num2Count.containsKey(num)) {
-                int count1 = num1Count.get(num);
-                int count2 = num2Count.get(num);
-                if(count1 < count2) {
-                    for(int i = 0;i<count1;i++) {
-                        allNums.add(num);
-                    }
-                } else {
-                    for(int i = 0;i<count2;i++) {
-                        allNums.add(num);
-                    }
-                }
-            }
-        }
+  
         
         int[] array = new int[allNums.size()];
         for(int i = 0;i<array.length;i++) {
