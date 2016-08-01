@@ -1,0 +1,13 @@
+public class Solution {
+    public int getSum(int a, int b) {
+        int base = a^b;
+        int up = a&b;
+        while(up!=0) {
+            up = up << 1;
+            int tmpUp = base & up;
+            base = base ^ up;
+            up = tmpUp;
+        }
+        return base;
+    }
+}
