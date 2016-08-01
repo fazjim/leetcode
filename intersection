@@ -1,0 +1,45 @@
+import java.util.Hashtable;
+public class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Hashtable<Integer, Integer> num1Count = new Hashtable<Integer, Integer>();
+        Hashtable<Integer, Integer> num2Count = new Hashtable<Integer, Integer>();
+        List<Integer> allNums = new ArrayList<Integer>();
+        for(int num1: nums1) {
+            if(num1Count.containsKey(num1)) {
+                num1Count.put(num1, num1Count.get(num1)+1);
+            } else {
+                num1Count.put(num1, 1);
+            }
+        }
+        for(int num2: nums2) {
+            if(num2Count.containsKey(num2)) {
+                num2Count.put(num2, num2Count.get(num2)+1);
+            } else {
+                num2Count.put(num2, 1);
+            }
+        }
+        Iterator<Integer> it = num1Count.keySet().iterator();
+        while(it.hasNext()) {
+            int num = it.next();
+            if(num2Count.containsKey(num)) {
+                int count1 = num1Count.get(num);
+                int count2 = num2Count.get(num);
+                if(count1 < count2) {
+                    for(int i = 0;i<count1;i++) {
+                        allNums.add(num);
+                    }
+                } else {
+                    for(int i = 0;i<count2;i++) {
+                        allNums.add(num);
+                    }
+                }
+            }
+        }
+        
+        int[] array = new int[allNums.size()];
+        for(int i = 0;i<array.length;i++) {
+            array[i] = allNums.get(i);
+        }
+        return array;
+    }
+}
