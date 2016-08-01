@@ -1,0 +1,27 @@
+import java.util.HashMap;
+import java.util.HashSet;
+public class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        HashMap<Character, String> index = new HashMap<Character, String>();
+        HashSet<String> words = new HashSet<String>();
+        String[] splits = str.split(" ");
+        if(splits.length != pattern.length()) return false;
+        for(int i = 0;i<pattern.length();i++) {
+            char c = pattern.charAt(i);
+            String word = splits[i];
+            if(!index.containsKey(c)) {
+                if(words.contains(word)) {
+                    return false;
+                } else {
+                    index.put(c,word);
+                    words.add(word);
+                }
+            } else {
+                if(!index.get(c).equals(word)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
