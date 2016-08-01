@@ -1,0 +1,14 @@
+public class Solution {
+    public boolean isPowerOfThree(int n) {
+       HashSet<Integer> allPower3s = new HashSet<Integer>();
+       int val = 1;
+       allPower3s.add(1);
+       while(val > 0 && val<Integer.MAX_VALUE) {
+           val = val * 3;
+           if(val > 0)
+           allPower3s.add(val);
+       }
+       return allPower3s.contains(n);
+    }
+}
+
