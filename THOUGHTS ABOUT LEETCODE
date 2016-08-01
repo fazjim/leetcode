@@ -7,5 +7,5 @@ THOUGHTS ABOUT LEETCODE
 4.  Ideas of KMP:  build a prefix and postfix table and use the match to increase the strides for moving
 5.  ListNode, find a position, using fast and slow pointers
 6.  Use of heap/PriorityQueue for n-best problems
-7.  Be careful of the overflow cases, for example (a+b)/2, but a+b may overflow, calculate mid as int mid = low + (high - low) / 2;
+7.  Be careful of the overflow cases, for example (a+b)/2, but a+b may overflow, calculate mid as int mid = low + (high - low) / 2(Refer to 2)
 8. bitwise operation: ^ XOR,  & and , | or,   << (0010 -> 0100)   >> (0010 -> 0001)
