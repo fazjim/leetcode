@@ -1,0 +1,22 @@
+public class Solution {
+    public boolean isAnagram(String s, String t) {
+        int[] arrayS = new int[26];
+        int[] arrayT = new int[26];
+        setArray(s, arrayS);
+        setArray(t, arrayT);
+        for(int i = 0;i<arrayS.length;i++) {
+                if(arrayS[i]!=arrayT[i]) {
+                    return false;
+                }
+        }
+        return true;
+    }
+    
+    public void setArray(String s, int[] array) {
+        for(int i = 0;i<s.length();i++) {
+            char c = s.charAt(i);
+            int index = (int)c-97;
+            array[index]++;
+        }
+    }
+}
