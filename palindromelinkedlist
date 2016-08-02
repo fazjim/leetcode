@@ -1,0 +1,37 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode twoSpeed = head;
+        ListNode oneSpeed = head;
+        while(twoSpeed!=null && twoSpeed.next!=null) {
+            twoSpeed = twoSpeed.next.next;
+            oneSpeed = oneSpeed.next;
+        }
+
+        ListNode startNode = head;
+        Stack<Integer> valStack = new Stack<Integer>();
+        while(startNode!=oneSpeed) {
+            valStack.push(startNode.val);
+            startNode = startNode.next;
+        }
+        if(twoSpeed!=null) {
+            //odd number
+            oneSpeed = oneSpeed.next;
+        }
+        while(oneSpeed!=null) {
+            int val = oneSpeed.val;
+            if(val != valStack.pop()) {
+                return false;
+            }
+            oneSpeed = oneSpeed.next;
+        }
+        return true;
+    }
+}
