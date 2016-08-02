@@ -1,3 +1,35 @@
+For binary search tree:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+       int lval = p.val;
+       int rval = q.val;
+       if(lval > rval) {
+           lval = rval;
+           rval = p.val;
+       }
+       int rootVal = root.val;
+       if(rootVal < lval) {
+           return lowestCommonAncestor(root.right, p, q);
+       } else if(rootVal > rval) {
+           return lowestCommonAncestor(root.left, p, q);
+       } else {
+           return root;
+       }
+    }
+}
+    
+
+
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
