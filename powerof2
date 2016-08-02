@@ -1,0 +1,12 @@
+public class Solution {
+    public boolean isPowerOfTwo(int n) {
+        if(n< 1) return false;
+            //0010, 0100, 1000, ....
+        int val = n & (n-1);
+        if(val == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
