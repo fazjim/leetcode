@@ -1,0 +1,50 @@
+import java.util.Queue;
+class MyStack {
+    Queue<Integer> popQueue = new LinkedList<Integer>();
+    Queue<Integer> storageQueue = new LinkedList<Integer>();
+
+    // Push element x onto stack.
+    public void push(int x) {
+        if(popQueue.isEmpty()) {
+            popQueue.offer(x);
+        } else {
+            int i = popQueue.poll();
+            storageQueue.offer(i);
+            popQueue.offer(x);
+        }
+    }
+
+    // Removes the element on top of the stack.
+    public void pop() {
+        popQueue.poll();
+        if(popQueue.isEmpty()) {
+            boolean storageCleared = false;
+            int val = -1;
+            while(!storageQueue.isEmpty()) {
+                int i = storageQueue.poll();
+                if(storageQueue.isEmpty()) {
+                    storageCleared = true;
+                    val = i;
+                } else {
+                    popQueue.offer(i);
+                }
+            }
+            if(storageCleared) {
+                storageQueue.offer(val);
+            }
+            Queue<Integer> tmp = storageQueue;
+            storageQueue = popQueue;
+            popQueue = tmp;
+        }
+    }
+
+    // Get the top element.
+    public int top() {
+        return popQueue.peek();
+    }
+
+    // Return whether the stack is empty.
+    public boolean empty() {
+        return popQueue.isEmpty();
+    }
+}
