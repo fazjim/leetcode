@@ -1,0 +1,20 @@
+public class Solution {
+    public int rob(int[] nums) {
+        if(nums.length == 0) return 0;
+        int[] money = new int[nums.length];
+        if(nums.length < 2) return nums[0];
+        money[0] = nums[0];
+        money[1] = nums[1];
+        for(int i = 2; i < nums.length; i++) {
+            int away2 = money[i-2];
+            int away3 = 0;
+            if(i>2) away3 = money[i-3];
+            if(away2 >= away3) money[i] = money[i-2] + nums[i];
+            else money[i] = money[i-3] + nums[i];
+        }
+        int option1 = money[nums.length-1];
+        int option2 = money[nums.length-2];
+        if(option1 > option2) return option1;
+        else return option2;
+    }
+}
