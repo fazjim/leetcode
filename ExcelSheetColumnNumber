@@ -1,0 +1,13 @@
+public class Solution {
+    public int titleToNumber(String s) {
+        int total = 0;
+        int dividend = 1;
+        for(int i = 0;i<s.length();i++) {
+            char c= s.charAt(s.length()-1-i);
+            int val = (int)c- 64;
+            total += val * dividend;
+            dividend *= 26;
+        }
+        return total;
+    }
+}
