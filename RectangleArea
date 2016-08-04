@@ -1,0 +1,22 @@
+public class Solution {
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int area1 = (C-A) * (D-B);
+        int area2 = (G-E)* (H-F);
+        if(area1 < 0) area1 = -area1;
+        if(area2 < 0) area2 = -area2;
+        
+        int leastLeft = A;
+        if (A<E) leastLeft = E;
+        int leastRight = C;
+        if(C>G) leastRight = G;
+        int leastBottom = B;
+        if(B<F) leastBottom = F;
+        int leastUp = D;
+        if(D>H) leastUp = H;
+        int overlapArea = 0;
+        if(leastRight > leastLeft && leastUp > leastBottom) {
+            overlapArea = (leastRight-leastLeft) * (leastUp - leastBottom);
+        }
+        return area1+area2-overlapArea;
+    }
+}
