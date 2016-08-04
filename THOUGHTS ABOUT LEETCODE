@@ -12,3 +12,4 @@ THOUGHTS ABOUT LEETCODE
 9.  StringBuffer for string operation, setCharAt for changing character
 10. to boost program speed, for characters such as "1" , "2", use "1"-'0' to get its index and use the array to avoid the use of Hashtable
 11. Just found out that always choose to use HashMap instead of Hashtable
+12. CountPrimes,  i*i< n  j = i*i, j+=i
