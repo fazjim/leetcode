@@ -1,0 +1,73 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int lengthA = getLength(headA);
+        int lengthB = getLength(headB);
+        int dist = 0;
+        ListNode shortCursor = headA;
+        ListNode longCursor = headB;
+        dist = lengthB - lengthA;
+        if(lengthA > lengthB) {
+            shortCursor = headB;
+            longCursor = headA;
+            dist = lengthA - lengthB;
+        }
+        for(int i = 0; i < dist; i++) {
+            longCursor = longCursor.next;
+        }
+        
+        while(shortCursor!=null && longCursor!=null) {
+            if(shortCursor == longCursor) return shortCursor;
+            shortCursor = shortCursor.next;
+            longCursor = longCursor.next;
+        }
+        return null;
+    }
+    
+    public int getLength(ListNode headA) {
+        int lengthA = 0;
+        ListNode pointer = headA;
+        while(pointer != null) {
+            pointer = pointer.next;
+            lengthA ++;
+        }
+        return lengthA;
+    }
+}
+
+
+
+//another interesting solution from discuss
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode topA = headA;
+        ListNode topB = headB;
+      
+        if(topA == null || topB == null) return null;
+        while(topA != topB) {
+            topA = topA.next;
+            topB = topB.next; 
+            if(topA == null && topB != null) {
+                topA = headB;
+            }
+            if(topB == null && topA != null) {
+                topB = headA;
+            }
+        }
+        return topA;
+        
+    }
+    
+   
+}
