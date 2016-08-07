@@ -1,0 +1,22 @@
+public class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> lists = new ArrayList<List<Integer>>();
+        for(int i = 0; i < numRows; i++) {
+            List<Integer> row = new ArrayList<Integer>();
+            if(i == 0) {
+                row.add(1);
+                lists.add(row);
+            } else {
+                row.add(1);
+                for(int j = 0; j < i - 1; j++) {
+                    int num = lists.get(i-1).get(j);
+                    int num1 = lists.get(i-1).get(j+1);
+                    row.add(num + num1);
+                }
+                row.add(1);
+                lists.add(row);
+            }
+        }
+        return lists;
+    }
+}
