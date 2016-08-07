@@ -14,7 +14,7 @@ public class Solution {
         return newRow;
     }
 }
-
+//From discuss
 public List<Integer> getRow(int rowIndex) {
       Integer[] result =  new Integer[rowIndex + 1];
       Arrays.fill(result, 0);
