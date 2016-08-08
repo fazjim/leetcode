@@ -8,6 +8,36 @@
  * }
  */
  
+ 
+ //From discussion, actually no need to use two queues, just use one queue and the queue size to set the layer
+ public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> list;
+        ArrayList<TreeNode> q = new ArrayList<TreeNode>();
+        if (root != null) {
+            q.add(root);
+        }
+        int size;
+        TreeNode tmp;
+        while(!q.isEmpty()) {
+            size = q.size();
+            list = new ArrayList<Integer>();
+            while(size > 0) {
+                tmp = q.remove(0);
+                if (tmp.left != null) {
+                    q.add(tmp.left);
+                }            
+                if(tmp.right != null) {
+                    q.add(tmp.right);
+                }
+                list.add(tmp.val);
+                size--;
+            }
+            result.add(0, list);
+        }
+        return result;
+    }
+ 
  //Using Queue will be clearer
 public class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
@@ -43,3 +73,4 @@ public class Solution {
         return reverseList;
     }
 }
+
