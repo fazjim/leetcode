@@ -1,0 +1,27 @@
+public class Solution {
+    public String countAndSay(int n) {
+        if(n == 1) return "1";
+        else {
+            StringBuffer sb  = new StringBuffer();
+            String last = countAndSay(n-1);
+            int i = 0;
+            int count = 0;
+            char currentDigit = last.charAt(0);
+            while (i < last.length()) {
+                while(i < last.length() && last.charAt(i) == currentDigit) {
+                    count++;
+                    i++;
+                }
+                if(count > 0) {
+                    sb.append(count);
+                    sb.append(currentDigit);
+                    if(i<last.length()) {
+                        currentDigit = last.charAt(i);
+                        count = 0;
+                    }
+                }
+            }
+            return sb.toString();
+        }
+    }
+}
