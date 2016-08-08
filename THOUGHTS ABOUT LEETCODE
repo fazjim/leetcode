@@ -14,3 +14,4 @@ THOUGHTS ABOUT LEETCODE
 11. Just found out that always choose to use HashMap instead of Hashtable
 12. CountPrimes,  i*i< n  j = i*i, j+=i
 13. When shifting an array, be careful to start from the end so that the shifting of previous elements would not affect the following operations
+14. Difference between minDepth and maxDepth, minDepth needs to consider the null child (null child is not the leaf), while maxDepth only needs to consider the max depth (will always ignore the null child)
