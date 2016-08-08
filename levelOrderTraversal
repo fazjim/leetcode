@@ -7,6 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+ //Using Queue will be clearer
 public class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         List<TreeNode> currentLayer = new ArrayList<TreeNode>();
