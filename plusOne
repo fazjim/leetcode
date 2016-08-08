@@ -1,0 +1,21 @@
+public class Solution {
+    public int[] plusOne(int[] digits) {
+        Stack<Integer> stack = new Stack<Integer>();
+        int addOn = 1;
+        for(int i = digits.length - 1; i >= 0; i--) {
+            int val = digits[i] + addOn;
+            int digit = val % 10;
+            addOn = val / 10;
+            stack.push(digit);
+        }
+        if(addOn > 0) stack.push(addOn);
+        int[] newArray = new int[stack.size()];
+        int index = 0;
+        while(!stack.empty()) {
+            int val = stack.pop();
+            newArray[index] = val;
+            index++;
+        }
+        return newArray;
+    }
+}
