@@ -18,3 +18,37 @@ public class Solution {
         return results;
     }
 }
+
+
+//2nd attempt
+
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, List<Integer>> indices = new HashMap<Integer, List<Integer>>();
+        for(int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if(!indices.containsKey(num)) {
+                List<Integer> positions = new ArrayList<Integer>();
+                indices.put(num, positions);
+            } 
+            indices.get(num).add(i);
+        }
+        
+        int[] result = new int[2];
+        Iterator<Integer> it = indices.keySet().iterator();
+        while(it.hasNext()) {
+            int num = it.next();
+            int rest = target - num;
+            if(num == rest && indices.get(num).size() > 1) {
+                result[0] = indices.get(num).get(0);
+                result[1] = indices.get(num).get(1);
+            } else {
+                if(indices.containsKey(rest)) {
+                    result[0] = indices.get(num).get(0);
+                    result[1] = indices.get(rest).get(0);
+                }
+            }
+        }
+        return result;
+    }
+}
