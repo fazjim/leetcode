@@ -1,0 +1,25 @@
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+       if(nums.length == 0) return 0;
+       
+       int start = 0;
+       int realIndex = 0;
+       while (realIndex < nums.length) {
+           if(nums[realIndex] == val) {
+                while (realIndex < nums.length && nums[realIndex] == val) {
+                    realIndex++;
+                }
+                if(realIndex < nums.length) {
+                    nums[start] = nums[realIndex];
+                    start++;
+                    realIndex++;
+                }
+           } else {
+               nums[start] = nums[realIndex];
+               start++;
+               realIndex++;
+           }
+       }
+       return start;
+    }
+}
