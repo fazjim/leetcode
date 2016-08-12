@@ -17,3 +17,34 @@ public class Solution {
         return buffer.toString();
     }
 }
+
+
+public class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        StringBuffer sb = new StringBuffer();
+        int index = 0;
+        while (true) {
+            char c = '\0';
+            for(int i = 0; i < strs.length; i++) {
+                if(index < strs[i].length()) {
+                    if(i == 0)
+                        c = strs[i].charAt(index);
+                    else {
+                        if(strs[i].charAt(index) != c) {
+                           return sb.toString();  
+                        } 
+                    }
+                    
+                } else {
+                    return sb.toString();
+                }
+            }
+            if(c != '\0') {
+                sb.append(c);
+                index++;
+            } else {
+                return sb.toString();
+            }
+        }
+    }
+}
