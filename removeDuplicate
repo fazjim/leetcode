@@ -1,0 +1,18 @@
+public class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length < 2) return nums.length;
+        int start = 0;
+        int realIndex = 1;
+        while(realIndex < nums.length) {
+            while(realIndex < nums.length && nums[start] == nums[realIndex]) {
+                realIndex++;
+            }
+            if(realIndex < nums.length) {
+                start++;
+                nums[start] = nums[realIndex];
+                realIndex++;
+            }
+        }
+        return start + 1;
+    }
+}
