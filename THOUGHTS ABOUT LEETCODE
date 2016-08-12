@@ -4,7 +4,9 @@ THOUGHTS ABOUT LEETCODE
 2.  Corner cases:
   a) Integer.MAX_VALUE, Integer.MIN_VALUE   judge if over   x >  (Integer.MAX_VALUE- y) / z
 3.  Sometimes for easy cases, code lookup will be faster than writing the logic judgements (integer to roman)
-4.  Ideas of KMP:  build a prefix and postfix table and use the match to increase the strides for moving
+4.  Ideas of KMP:  build a prefix table and use the match to increase the strides for moving
+The building of KMP prefix table, ABCDABE, then prefix of E is the same of prefix C, so if E does not match, jump to see if C matches (because you know AB already matches)
+The time complexity is O(m+n)
 5.  ListNode, find a position, using fast and slow pointers
 6.  Use of heap/PriorityQueue for n-best problems
 7.  Be careful of the overflow cases, for example (a+b)/2, but a+b may overflow, calculate mid as int mid = low + (high - low) / 2(Refer to 2)
@@ -16,3 +18,4 @@ THOUGHTS ABOUT LEETCODE
 13. When shifting an array, be careful to start from the end so that the shifting of previous elements would not affect the following operations
 14. Difference between minDepth and maxDepth, minDepth needs to consider the null child (null child is not the leaf), while maxDepth only needs to consider the max depth (will always ignore the null child)
 15. Again, to avoid conflict in in-space array operation, think about whether start from the end
+16. Rabin-Karp: Use hash instead of character matching
