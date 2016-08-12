@@ -49,3 +49,35 @@ public class Solution {
     }
 }
 
+//2nd attempt
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows == 1) return s;
+        StringBuffer[] array = new StringBuffer[numRows];
+        for(int i = 0; i < numRows; i++) {
+            array[i] = new StringBuffer();
+        }
+        
+        boolean zig = true;
+        int arrayIndex = 0;
+        int realIndex = 0;
+        while (realIndex < s.length()) {
+            array[arrayIndex].append(s.charAt(realIndex));
+            realIndex++;
+            if(arrayIndex == 0)  {
+                zig = true;
+            } else if(arrayIndex == numRows - 1) {
+                zig = false;
+            }
+            
+            if(zig) arrayIndex++;
+            else arrayIndex--;
+        }
+        
+        StringBuffer finalStr = new StringBuffer();
+        for(int i = 0; i < numRows; i++) {
+            finalStr.append(array[i].toString());
+        }
+        return finalStr.toString();
+    }
+}
