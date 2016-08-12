@@ -1,0 +1,48 @@
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle.length() == 0) return 0;
+         int[] lookupTable = generateLookUpTable(needle);
+         int i = 0;
+         int j = 0;
+         while (i < haystack.length() && j < needle.length()) {
+             if (j == needle.length()) {
+                 return i - needle.length();
+             }
+             while (j != -1 && haystack.charAt(i) != needle.charAt(j)) {
+                 j = lookupTable[j];
+             } 
+             i++;
+             j++;
+         }
+         if(j == needle.length()) return i - needle.length();
+         return -1;
+    }
+    
+    public int[] generateLookUpTable(String needle) {
+        int[] lookup = new int[needle.length()];
+        if(needle.length() < 2) lookup = new int[2];
+        int index = 0;
+        int prefixLocation = -1;
+        lookup[index] = prefixLocation;
+        index++;
+        prefixLocation++;
+        lookup[index] = prefixLocation;
+        index++;
+        
+        if(needle.length()>=2) {
+            while (index < needle.length()) {
+                if(needle.charAt(index-1) == needle.charAt(prefixLocation)) {
+                    prefixLocation++;
+                    lookup[index] = prefixLocation;
+                    index++;
+                } else if (prefixLocation > 0) {
+                    prefixLocation = lookup[prefixLocation];
+                } else {
+                    lookup[index] = 0;
+                    index++;
+                }
+            }
+        }
+        return lookup;
+    }
+}
