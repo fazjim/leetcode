@@ -33,3 +33,49 @@ public class Solution {
         return val;
     }
 }
+
+
+2nd attempt
+
+public class Solution {
+    public int myAtoi(String str) {
+        if(str.length()==0) return 0;
+        else {
+            int index = 0;
+            boolean isNegative = false;
+            while(index < str.length()) {
+                if(str.charAt(index) == ' ') index++;
+                else if(str.charAt(index) == '-') {
+                    isNegative = true;
+                    index++;
+                    break;
+                } else if(str.charAt(index) == '+') {
+                    index++;
+                    break;
+                } else {
+                   break; 
+                }
+            }
+           
+            int val = 0;
+            while (index < str.length()) {
+                int tmp = (int) (str.charAt(index) - '0');
+                if(tmp >= 0 && tmp <= 9) {
+                    if((Integer.MAX_VALUE - tmp) / 10 < val) {
+                        if(!isNegative) return Integer.MAX_VALUE;
+                        else return Integer.MIN_VALUE;
+                    } else {
+                        val = val * 10 + tmp;
+                    }
+                } else {
+                    break;
+                }
+                index++;
+            }
+            if(isNegative) {
+                val = 0 - val;
+            }
+            return val;
+        }
+    }
+}
