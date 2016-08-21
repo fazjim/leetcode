@@ -1,0 +1,76 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    int length = 0;
+    ListNode headNode;
+    /** @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node. */
+    public Solution(ListNode head) {
+        headNode = head;
+        ListNode node = head;
+        while(node != null) {
+            length++;
+            node = node.next;
+        }
+    }
+    
+    /** Returns a random node's value. */
+    public int getRandom() {
+        Random rand = new Random();
+        int val = rand.nextInt(length);
+        ListNode fetchNode = headNode;
+        for(int i = 0; i < val; i++) {
+            fetchNode = fetchNode.next;
+        }
+        return fetchNode.val;
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(head);
+ * int param_1 = obj.getRandom();
+ */
+ 
+ 
+ Interesting solution from Discuss (The elevator approach)
+ 
+ public class Solution {
+    int count = 1;
+    int idx = 0;
+    Random rd = new Random();
+    ListNode cur;
+    ListNode root;
+    /** @param head The linked list's head. Note that the head is guanranteed to be not null, so it contains at least one node. */
+    public Solution(ListNode head) {
+        root = head;
+        cur = head;
+        while (cur.next != null) {
+            cur = cur.next;
+            count++;
+        }
+        cur=head;
+    }
+    
+    /** Returns a random node's value. */
+    public int getRandom() {
+        int steps = rd.nextInt(count);
+        if ( (idx+steps) >= count){
+            cur = root;
+            steps = (idx+steps) - count;
+            idx = 0;
+        }
+        while (steps > 0) {
+            steps--;
+            idx++;
+            cur=cur.next;
+        }
+        return cur.val;
+    }
+}
