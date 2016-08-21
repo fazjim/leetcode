@@ -1,0 +1,86 @@
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * public interface NestedInteger {
+ *     // Constructor initializes an empty nested list.
+ *     public NestedInteger();
+ *
+ *     // Constructor initializes a single integer.
+ *     public NestedInteger(int value);
+ *
+ *     // @return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     public boolean isInteger();
+ *
+ *     // @return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // Return null if this NestedInteger holds a nested list
+ *     public Integer getInteger();
+ *
+ *     // Set this NestedInteger to hold a single integer.
+ *     public void setInteger(int value);
+ *
+ *     // Set this NestedInteger to hold a nested list and adds a nested integer to it.
+ *     public void add(NestedInteger ni);
+ *
+ *     // @return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // Return null if this NestedInteger holds a single integer
+ *     public List<NestedInteger> getList();
+ * }
+ */
+public class Solution {
+    public NestedInteger deserialize(String s) {
+        Stack<NestedInteger> nestedObjStack = new Stack<NestedInteger>();
+        Stack<Character> allStack = new Stack<Character>();
+        NestedInteger currentObj = null;
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c == '[') {
+               allStack.push(c);
+            } else if(c == ',') {
+                if(sb.length() > 0) {
+                    nestedObjStack.push(createObj(sb));
+                    allStack.push(c);
+                }
+            } else if(c == ']') {
+               NestedInteger parent = new NestedInteger();
+               List<NestedInteger> tobeAdded = new ArrayList<NestedInteger>();
+               if(sb.length()!= 0) {
+                    NestedInteger newObj = createObj(sb);
+                    tobeAdded.add(newObj);
+               }               
+               while(!allStack.empty() && allStack.pop() != '[') {
+                   NestedInteger another = nestedObjStack.pop();
+                   tobeAdded.add(another);
+               }
+               for(int j = tobeAdded.size()-1; j >= 0; j--) {
+                   parent.add(tobeAdded.get(j));
+               }
+               nestedObjStack.push(parent);
+               allStack.push(',');
+            } else {
+                sb.append(c);
+            }
+            
+        }
+        
+        
+        if(sb.length()!= 0) {
+            NestedInteger newObj = createObj(sb);
+            nestedObjStack.push(newObj);
+        }   
+        return nestedObjStack.pop();
+    }
+    
+    public NestedInteger createObj(StringBuffer sb) {
+        String val = sb.toString();
+        NestedInteger obj;
+        if(sb.length() > 0) {
+            int valInt = Integer.parseInt(val);
+            obj = new NestedInteger(valInt);
+            sb.setLength(0);
+        } else {
+            obj = new NestedInteger();
+        }
+        return obj;
+    }
+}
