@@ -1,0 +1,21 @@
+public class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] table = new int[26];
+        for(int i = 0; i < magazine.length(); i++) {
+            char c = magazine.charAt(i);
+            int position = c - 'a';
+            table[position]++;
+        }
+        
+        for(int i = 0; i < ransomNote.length(); i++) {
+            char c = ransomNote.charAt(i);
+            int pos = c - 'a';
+            if(table[pos] > 0) {
+                table[pos]--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+}
