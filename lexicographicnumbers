@@ -1,0 +1,23 @@
+public class Solution {
+    //Tree solution
+    // 1  2 3 4
+    //10 11 12 13 14.. 19  2 3 4
+    // 101 102....
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer> values = new ArrayList<Integer>();
+        lexicalOrderTraversal(1, values, n);
+        return values;
+    }
+    
+    public void lexicalOrderTraversal(int root, List<Integer> values, int n) {
+        if(root <= n) {
+            values.add(root); 
+            int newRoot = root * 10;
+            lexicalOrderTraversal(newRoot, values, n);
+            if((root + 1) % 10 != 0)
+            lexicalOrderTraversal(root + 1, values, n);
+        } else {
+            return;
+        }
+    }
+}
