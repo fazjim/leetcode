@@ -1,0 +1,39 @@
+public class Solution {
+    public int lengthLongestPath(String input) {
+        int longestLength = 0;
+        int currentLength = 0;
+        Stack<Integer> pathStack = new Stack<Integer>();
+        int tagLength = 0;
+        int depth = 0;
+        boolean isFile = false;
+        input = input + "\n";
+        for(int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if(c == '\n') {
+                int toPop = pathStack.size() - depth;
+                for(int j = 0; j < toPop; j++) {
+                        int pop = pathStack.pop();
+                        currentLength = currentLength - pop;
+               }
+               if(isFile) { 
+                   int fileLength = currentLength + tagLength;
+                   if(fileLength > longestLength) longestLength = fileLength;
+               } else {
+                   currentLength += tagLength + 1;
+                   pathStack.push(tagLength + 1);
+               }
+               depth = 0;
+               isFile = false;
+               tagLength = 0;
+            } else if(c == '\t') {
+                depth++;
+            } else if(c == '.') {
+                isFile = true;
+                tagLength++;
+            } else {
+                tagLength++;
+            }
+        }
+        return longestLength;
+    }
+}
