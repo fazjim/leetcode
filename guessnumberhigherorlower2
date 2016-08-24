@@ -1,0 +1,27 @@
+public class Solution {
+    public int getMoneyAmount(int n) {
+        int[][] matrix = new int[n][n];
+        for(int i = 0; i < n; i++) {
+            for(int j = i; j < n; j++) {
+                if(i == j) matrix[i][j] = 0;
+                else if(j - i == 1) matrix[i][j] = i+1;
+                else matrix[i][j] = -1;
+            }
+        }
+        return getMoneyAmount(0, n-1, matrix);
+    }
+    
+    public int getMoneyAmount(int start, int end, int[][] matrix) {
+        if(start > end) return 0;
+        if(matrix[start][end] >= 0) return matrix[start][end];
+        else {
+            int max = Integer.MAX_VALUE;
+            for(int k = start; k <= end; k++) {
+                int money = Math.max(k + 1 + getMoneyAmount(start, k-1, matrix), k + 1 + getMoneyAmount(k+1, end, matrix));
+                max = Math.min(money, max);
+            }
+            matrix[start][end] = max;
+            return max;
+        }
+    }
+}
