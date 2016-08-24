@@ -21,3 +21,4 @@ The time complexity is O(m+n)
 16. Rabin-Karp: Use hash instead of character matching
 17. One way to avoid always starting from the first position of a linkedlist is to record the position of last and then do the math
 18. Use PriorityQueue to store the min/max value and dynamically updates the queue to get the kth value
+19. DP has both top-down and bottom-up solutions!
