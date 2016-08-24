@@ -1,0 +1,22 @@
+//recursive
+public class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        HashMap<Integer, Integer> values = new HashMap<Integer, Integer>();
+        values.put(0, 1);
+        return combinationSum4Helper(nums, target, values);
+    }
+    
+    public int combinationSum4Helper(int[] nums, int target, HashMap<Integer, Integer> values) {
+        if(values.containsKey(target)) return values.get(target);
+        else {
+            int total = 0;
+            for(int i = 0; i < nums.length; i++) {
+                int val = nums[i];
+                if(target >= val)
+                    total += combinationSum4Helper(nums, target-val, values);
+            }
+            values.put(target, total);
+            return total;
+        }
+    }
+}
