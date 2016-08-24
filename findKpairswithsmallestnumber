@@ -1,0 +1,45 @@
+public class Solution {
+    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        PriorityQueue<Node> queue = new PriorityQueue<Node>();
+        List<int[]> list = new ArrayList<int[]>();
+        int all = nums1.length * nums2.length;
+        if(k > all) k = all;
+        if(k == 0) return list;
+        
+        for(int i = 0; i < nums2.length; i++) {
+            Node node = new Node(0, i, nums2[i]+nums1[0]);
+            queue.offer(node);
+        }
+        for(int i = 0; i < k; i++) {
+            Node top =  queue.poll();
+            int x = top.x;
+            int y = top.y;
+            int[] val = new int[2];
+            val[0] = nums1[x];
+            val[1] = nums2[y];
+            list.add(val);
+            if(x < nums1.length-1) {
+                int newX = x + 1;
+                Node newNode = new Node(newX, y, nums1[newX] + nums2[y]);
+                queue.offer(newNode);
+            }
+        }
+        return list;
+    }
+}
+
+class Node implements Comparable<Node>{
+    int x;
+    int y;
+    int val;
+    
+    public Node(int x, int y, int val) {
+        this.x = x;
+        this.y = y;
+        this.val = val;
+    }
+    
+    public int compareTo(Node node) {
+        return this.val - node.val;
+    }
+}
