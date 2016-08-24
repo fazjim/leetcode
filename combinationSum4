@@ -1,5 +1,6 @@
 //recursive
 //The recursive solution can reduce the amount of space used here
+//actually is top-down search
 public class Solution {
     public int combinationSum4(int[] nums, int target) {
         HashMap<Integer, Integer> values = new HashMap<Integer, Integer>();
