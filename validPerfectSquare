@@ -1,0 +1,35 @@
+public class Solution {
+    public boolean isPerfectSquare(int num) {
+        if(num < 2) return true;
+        return isPerfectSquare(num, 0, num);
+    }
+    
+    public boolean isPerfectSquare(int num, int start, int end) {
+        if(end < 2) return false;
+        if(start == end) {
+            int val = num / start;
+            int mod = num % start;
+            if(val == start) {
+                if(mod == 0) return true;
+                else return false;
+            } else {
+                return false;
+            }
+        } else {
+            int middle = start + (end - start) / 2;
+            if(start == middle || end == middle) return isPerfectSquare(num, middle, middle);
+            else {
+                int val = num / middle;
+                int mod = num % middle;
+                if(val == middle) {
+                    if(mod == 0) return true;
+                    else return false;
+                } else if(val > middle) {
+                    return isPerfectSquare(num, middle, end);
+                } else {
+                    return isPerfectSquare(num, start, middle);
+                }
+            }
+        }
+    }
+}
