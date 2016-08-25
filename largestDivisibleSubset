@@ -1,0 +1,48 @@
+public class Solution {
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        Arrays.sort(nums);
+        int[] dp = new int[nums.length];
+        int[] indexDp = new int[nums.length];
+        List<Integer> result = new ArrayList<Integer>();
+        if(nums.length == 0) return result;
+        dp[0] = 1;
+        for(int i = 0; i< nums.length; i++) {
+            indexDp[i] = -1;
+        }
+        int max = 0;
+        int maxIndex = 0;
+        for(int i = 1; i < nums.length; i++) {
+            int largestLength = 0;
+            int val = nums[i];
+            int index = -1;
+            for(int j = i-1; j>=0; j--) {
+                int base = nums[j];
+                if(val % base == 0) {
+                    int length = dp[j] + 1;
+                    if(length > largestLength) {
+                        largestLength = length;
+                        index = j;
+                    }
+                }
+            }
+            dp[i] = largestLength;
+            indexDp[i] = index;
+            if(largestLength > max) {
+                max = largestLength;
+                maxIndex = i;
+            }
+        }
+        
+        result.add(nums[maxIndex]);
+        int next = indexDp[maxIndex];
+        while(next != -1) {
+            result.add(nums[next]);
+            next = indexDp[next];
+        }
+        Collections.reverse(result);
+        return result;
+    }
+    
+   
+}
+
