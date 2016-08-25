@@ -23,3 +23,4 @@ The time complexity is O(m+n)
 18. Use PriorityQueue to store the min/max value and dynamically updates the queue to get the kth value
 19. DP has both top-down and bottom-up solutions!
 20. In the application of binary search, be careful of the move of middle to avoid endless loop (Whether start > end)
+21. GCD (Global common divisor) can also be viewed as the smallest linear combination of x and y, proof can be found here: https://aakritty.wordpress.com/2014/02/10/solving-the-water-jug-problem/
