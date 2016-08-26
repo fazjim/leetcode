@@ -9,26 +9,34 @@
  */
 public class Solution {
     public int rob(TreeNode root) {
+        HashMap<TreeNode, Integer> values = new HashMap<TreeNode, Integer>();
+        return robHelper(root, values);
+    }
+    
+    public int robHelper(TreeNode root, HashMap<TreeNode, Integer> values) {
         if(root == null) return 0;
         if(root.left == null && root.right == null) {
             return root.val;
         }
+        if(values.containsKey(root)) return values.get(root);
         int leftVal = 0;
         if(root.left == null) leftVal = 0;
         int rightVal = 0;
         if(root.right == null) rightVal = 0;
         
-        int robLeft = rob(root.left);
-        int robRight = rob(root.right);
+        int robLeft = robHelper(root.left, values);
+        int robRight = robHelper(root.right, values);
         
         int s = robLeft + robRight;
         int t = root.val;
         
         if(root.left != null)
-        t += rob(root.left.left) + rob(root.left.right);
+        t += robHelper(root.left.left, values) + robHelper(root.left.right, values);
         if(root.right != null) 
-        t += rob(root.right.left) + rob(root.right.right);
+        t += robHelper(root.right.left, values) + robHelper(root.right.right,values);
         
-        return Math.max(s, t);
+        int val = Math.max(s, t);
+        values.put(root, val);
+        return val;
     }
 }
