@@ -1,0 +1,32 @@
+public class Solution {
+    public boolean increasingTriplet(int[] nums) {
+        if(nums.length < 3) return false;
+        int first = nums[0];
+        int second = nums[1];
+        if(first >= second) {
+           first = second;
+           second = Integer.MAX_VALUE;
+        }
+        int min = first;
+        
+        for(int i = 2; i < nums.length; i++) {
+            int val = nums[i];
+            if(val > second) {
+                if(first == second) {
+                    first = second;
+                    second = val;
+                } else {
+                    return true;
+                }
+            } else if(val < second) {
+                if(val > min) {
+                    first = min;
+                    second = val;
+                } else {
+                    min = val;
+                }
+            }
+        }
+        return false;
+    }
+}
