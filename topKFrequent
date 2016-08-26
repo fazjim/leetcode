@@ -38,3 +38,50 @@ class Node implements Comparable<Node> {
         return node.count - this.count;
     }
 }
+
+
+//bucket sort solution
+public class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+       HashMap<Integer, Integer> counter = new HashMap<Integer, Integer>();
+       for(int i = 0; i < nums.length; i++) {
+           int digit = nums[i];
+           if(counter.containsKey(digit)) {
+               counter.put(digit, counter.get(digit)+1);
+           } else {
+               counter.put(digit, 1);
+           }
+       }
+       
+       List<Integer>[] bucket = new List[nums.length+1];
+       for(int number: counter.keySet()) {
+           int count = counter.get(number);
+           if(bucket[count] == null) {
+               List<Integer> array = new ArrayList<Integer>();
+               bucket[count] = array;
+           }
+           bucket[count].add(number);
+       }
+       
+       int total = k;
+       List<Integer> result = new ArrayList<Integer>();
+       for(int i = bucket.length-1; i >= 0; i--) {
+           List<Integer> items = bucket[i];
+           if(items!=null) {
+           if(items.size() < total) {
+               result.addAll(items);
+               total-= items.size();
+               if(total == 0) break;
+           } else {
+               for(int j = 0; j < total; j++) {
+                   result.add(items.get(j));
+               }
+               break;
+           }
+           }
+       }
+       return result;
+    }
+}
+
+
