@@ -26,3 +26,4 @@ The time complexity is O(m+n)
 21. GCD (Global common divisor) can also be viewed as the smallest linear combination of x and y, proof can be found here: https://aakritty.wordpress.com/2014/02/10/solving-the-water-jug-problem/
 gcd(x, y) = gcd (y, x-y)   ||  gcd(x, y) == gcd (y, x % y)
 22. BucketSort when requires good time complexity, idea: use the space to record frequency or sorting information
+23. DFS with List filling :    DFS(next, list) , list.add(0, current)
