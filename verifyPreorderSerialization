@@ -1,0 +1,22 @@
+public class Solution {
+    public boolean isValidSerialization(String preorder) {
+        String[] splits = preorder.split(",");
+        int index = 0;
+        index = helper(splits, index);
+        if(index == splits.length) return true;
+        else return false;
+    }
+    
+    public int helper(String[] splits, int index){
+        if(index >= splits.length) return -1;
+        if(splits[index].equals("#")){
+            index ++;
+            return index;
+        } else {
+            index = helper(splits, index + 1);
+            if(index == -1) return index;
+            index = helper(splits, index);
+            return index;
+        }
+    }
+}
