@@ -27,3 +27,4 @@ The time complexity is O(m+n)
 gcd(x, y) = gcd (y, x-y)   ||  gcd(x, y) == gcd (y, x % y)
 22. BucketSort when requires good time complexity, idea: use the space to record frequency or sorting information
 23. DFS with List filling :    DFS(next, list) , list.add(0, current)
+24. Quicksort  start with n-1,  set two cursors i and j, compare val, if less swap and move, if large stop i and keep moving j 
