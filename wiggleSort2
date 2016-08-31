@@ -1,0 +1,73 @@
+public class Solution {
+    public void wiggleSort(int[] nums) {
+        if(nums.length < 2) return;
+        int median = findKth(nums, 0, nums.length-1, nums.length/2 + 1);
+        wiggle(nums, median);
+    }
+    
+    public void wiggle(int[] nums, int median) {
+       //odd as small and even as large
+       int start = 1;
+       int end = nums.length - 1;
+       if(nums.length % 2 == 0) end = nums.length - 2;
+       
+       //start for big and end for small
+       int i = end;
+       while(i > -1) {
+           if(nums[i] < median) {
+               swap(nums, i, end);
+               end -= 2;
+               i -= 2;
+           } else if(nums[i] > median) {
+               swap(nums, i, start);
+               start += 2;
+           } else {
+               i -= 2;
+           }
+       }
+       
+       i = start;
+       while(i < nums.length) {
+           if(nums[i] < median) {
+               swap(nums, i, end);
+               end -= 2;
+           } else if(nums[i] > median) {
+               swap(nums, i, start);
+               start += 2;
+               i += 2;
+           } else {
+               i += 2;
+           }
+       }
+    }
+    
+    
+    public int findKth(int[] nums, int start, int end, int k) {
+        int pivot = nums[end];
+        int i = start;
+        int j = start;
+        while (j < end) {
+            if(nums[j] < pivot) {
+                swap(nums, i, j);
+                i++;
+            } 
+            j++;
+        }
+        swap(nums, i, end);
+        
+        int fixed = i + 1 - start;
+        if(fixed == k) {
+            return nums[i];
+        } else if(fixed > k) {
+            return findKth(nums, start, i - 1, k);
+        } else {
+            return findKth(nums, i + 1, end, k - fixed);
+        }
+    }
+    
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
