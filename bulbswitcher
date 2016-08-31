@@ -1,0 +1,30 @@
+public class Solution {
+    public int bulbSwitch(int n) {
+        return (int)Math.sqrt(n);
+    }
+    
+    
+}
+
+//not math solution from discuss
+public int bulbSwitch(int n) {
+    if(n<2){
+        return n;
+    }
+    int result = 0;
+
+    boolean[] bulbs = new boolean[n+1];
+    bulbs[1]=true;
+    for(int swch = 2; swch<=n/2; swch++){
+        for(int bulb = 2*swch; bulb<n+1; bulb+=swch){
+            bulbs[bulb] = !bulbs[bulb];
+        }
+    }
+
+    for(int i = 1; i<=n; i++){
+        if(bulbs[i]){
+            result++;
+        }
+    }
+    return result;
+}
