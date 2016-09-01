@@ -1,0 +1,24 @@
+public class Solution {
+    public int nthSuperUglyNumber(int n, int[] primes) {
+        int[] record = new int[primes.length]; //simply recording the last largest index
+        int[] dp = new int[n];
+        
+        dp[0] = 1;
+        //the larger the prime is, the smallest the index will be
+        for(int i = 1; i < n; i++) {
+            int val = Integer.MAX_VALUE;
+            for(int j = 0; j < primes.length; j++) {
+                int prime = primes[j];
+                val = Math.min(dp[record[j]] * prime, val);
+            }
+            
+            dp[i] = val;
+            for(int j = 0; j < primes.length; j++) {
+                int prime = primes[j];
+                if(val % prime == 0) record[j] = record[j] + 1;
+            }
+        }
+        
+        return dp[n-1];
+    }
+}
