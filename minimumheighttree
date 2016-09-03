@@ -1,0 +1,53 @@
+public class Solution {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        int[] degrees = new int[n];
+        HashMap<Integer, List<Integer>> links = new HashMap<Integer, List<Integer>>();
+        for(int[] edge: edges) {
+            int node0 = edge[0];
+            int node1 = edge[1];
+            degrees[node0]++;
+            degrees[node1]++;
+            if(!links.containsKey(node0)) {
+                links.put(node0, new ArrayList<Integer>());
+            }
+            if(!links.containsKey(node1)) {
+                links.put(node1, new ArrayList<Integer>());
+            }
+            links.get(node0).add(node1);
+            links.get(node1).add(node0);
+        }
+        
+        Queue<Integer> nodes = new LinkedList<Integer>();
+        for(int i = 0; i < degrees.length; i++) {
+            if(degrees[i] <= 1) {
+                nodes.offer(i);
+                degrees[i] = 0;
+            }
+        }
+        
+        boolean end = false;
+        List<Integer> result = new ArrayList<Integer>();
+        while(!end) {
+            int count = nodes.size();
+            result.clear();
+            for(int i = 0; i< count; i++) {
+                int node = nodes.poll();
+                result.add(node);
+                List<Integer> restNodes = links.get(node);
+                if(restNodes!=null) {
+                for(Integer next: restNodes) {
+                    if(degrees[next] == 2) {
+                        nodes.offer(next);
+                    }
+                    degrees[next]--;
+                }
+                }
+            }
+            
+            if(nodes.size() == 0) {
+                end = true;
+            }
+        }
+        return result;
+    }
+}
