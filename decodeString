@@ -1,0 +1,53 @@
+public class Solution {
+    public String decodeString(String s) {
+        Stack<Integer> count = new Stack<Integer>();
+        Stack<StringBuffer> strStack = new Stack<StringBuffer>();
+        
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int number = c - '0';
+            if(number >= 0 && number <= 9) {
+                if(!count.empty()) {
+                    int val = count.pop();
+                    val = val * 10 + number;
+                    count.push(val);
+                } else {
+                    count.push(number);
+                }
+            } else {
+                if(c == '[') {
+                    //do nothing
+                    count.push(0);
+                    strStack.push(new StringBuffer(""));
+                } else if(c == ']') {
+                    int num = count.pop();
+                    StringBuffer repeatStr = new StringBuffer();
+                    while(num == 0 && !count.empty()) {
+                        num = count.pop();
+                    }
+                    count.push(0);
+                    String str = strStack.pop().toString();
+                    for(int j = 0; j< num; j++) {
+                        repeatStr.append(str);
+                    }
+                    if(!strStack.empty()) {
+                        strStack.push(strStack.pop().append(repeatStr.toString()));
+                    } else {
+                        strStack.push(repeatStr);
+                    }
+                } else {
+                    if(!strStack.empty()) {
+                        strStack.push(strStack.pop().append(c));
+                    } else {
+                        StringBuffer temp = new StringBuffer();
+                        temp.append(c);
+                        strStack.push(temp);
+                    }
+                }
+            }
+        }
+        
+        if(strStack.empty()) return "";
+        return strStack.pop().toString();
+    }
+}
