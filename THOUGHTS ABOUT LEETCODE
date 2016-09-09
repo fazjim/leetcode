@@ -31,3 +31,4 @@ gcd(x, y) = gcd (y, x-y)   ||  gcd(x, y) == gcd (y, x % y)
 quickselect (also partition-based algorithm), average time complexity is O(N)
 25. subsequence (does not require consecutive characters, thus once the previous one matches, it matches), but substr requires consecutive order, and thus requires KMP
 26. SegmentTree, (sum, left, right, start, end),   buildTree(buildLeft, buildRight),  update( update(left) | update(right))
+Binary Indexed Tree
