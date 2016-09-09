@@ -1,0 +1,30 @@
+public class Solution {
+    public boolean isAdditiveNumber(String num) {
+       int length = num.length();
+       int max_i = (length - 1) / 2;
+       if(num.length()<=2) return false;
+       for(int i = 1; i <= max_i; i++)  {
+           for(int j = i+1; length - j >= j-i && length - j >= i; j++) {
+               String first = num.substring(0, i);
+               String second = num.substring(i, j);
+               String rest = num.substring(j);
+               if(isValid(rest, first, second)) return true;
+           }
+       }
+       return false;
+    }
+    
+    public boolean isValid(String numStr, String first, String second) {
+        if((first.startsWith("0") && first.length() > 1)|| (second.startsWith("0") && second.length() > 1)) return false;
+        long l1 = Long.parseLong(first);
+        long l2 = Long.parseLong(second);
+        long sum = l1 + l2;
+        String sumStr = Long.toString(sum);
+        if(numStr.equals(sumStr)) return true;
+        if(!numStr.startsWith(sumStr)) {
+            return false;
+        }
+        String rest = numStr.substring(sumStr.length());
+        return isValid(rest, second, sumStr);
+    }
+}
