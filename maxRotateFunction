@@ -1,0 +1,24 @@
+public class Solution {
+    public int maxRotateFunction(int[] A) {
+        int maxVal = Integer.MIN_VALUE;
+        int n = A.length;
+        if(n == 0) return 0;
+        for(int i = 0; i < n; i++) {
+            maxVal = Math.max(maxVal, calc(A, i, n));
+        }
+        return maxVal;
+    }
+    
+    public int calc(int[] A, int startIndex, int n) {
+        int index = startIndex;
+        int val = 0;
+        for(int i = 0; i< n ; i++) {
+            val += index * A[i];
+            index++;
+            if(index == n) {
+                index = 0;
+            }
+        }
+        return val;
+    }
+}
