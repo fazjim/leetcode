@@ -1,0 +1,59 @@
+public class Solution {
+    public void gameOfLife(int[][] board) {
+        int rowNum = board.length;
+        if(rowNum == 0) return;
+        int colNum = board[0].length;
+        for(int i = 0; i < rowNum; i++) {
+            for(int j = 0; j < colNum; j++) {
+                int lives = countLives(board, i, j, rowNum, colNum);
+                int currentState = board[i][j];
+                if(currentState % 10 == 1) {
+                    //live
+                    if(lives < 2 || lives > 3) {
+                        //do nothing, set 10-digit to 0
+                    } else {
+                        board[i][j] = 11;
+                    }
+                } else {
+                    if(lives == 3) {
+                        board[i][j] = 10;
+                    } else {
+                        //do nothing
+                    }
+                }
+            }
+        }
+        
+        for(int i = 0; i < rowNum; i++) {
+            for(int j = 0; j < colNum; j++) {
+                board[i][j] = board[i][j] / 10;
+            }
+        }
+    }
+    
+    public int countLives(int[][] board, int i, int j, int rowNum, int colNum) {
+        int left = j - 1;
+        if(left < 0) left = 0;
+        int right = j + 1;
+        if(right >= colNum) right = colNum - 1;
+        
+        int top = i - 1;
+        if(top < 0) top = 0;
+        int bottom = i  + 1;
+        if(bottom >= rowNum) bottom = rowNum - 1;
+        
+        int count = 0;
+        for(int ii = top; ii <= bottom; ii++) {
+            for(int jj = left; jj <= right; jj++) {
+                if(ii == i && jj == j) {
+                    continue;
+                } else {
+                    if(board[ii][jj] % 10 == 1) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}
