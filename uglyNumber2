@@ -1,0 +1,22 @@
+public class Solution {
+    public int nthUglyNumber(int n) {
+        int[] uglyBase = {2, 3, 5};
+        int[] index = new int[uglyBase.length];
+        
+        int[] uglys = new int[n];
+        uglys[0] = 1;
+        for(int i = 1; i < n; i++) {
+            int val = Integer.MAX_VALUE;
+            for(int j = 0; j < uglyBase.length; j++) {
+                val = Math.min(val, uglys[index[j]] * uglyBase[j]);
+            }
+            
+            uglys[i] = val;
+            for(int j = 0; j < uglyBase.length; j++) {
+                if(val % uglyBase[j] == 0) index[j]++;
+            }
+        }
+        
+        return uglys[n-1];
+    }
+}
