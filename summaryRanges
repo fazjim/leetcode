@@ -1,0 +1,28 @@
+public class Solution {
+    public List<String> summaryRanges(int[] nums) {
+        List<String> ranges = new ArrayList<String>();
+        if(nums.length == 0)  return ranges;
+        int rangeStart = nums[0];
+        int rangeEnd = nums[0];
+        for(int i = 1; i< nums.length; i++) {
+            if(nums[i] == rangeEnd + 1) {
+                rangeEnd ++;
+            } else {
+                String range = Integer.toString(rangeStart);
+                if(rangeStart != rangeEnd) {
+                    range += "->" + Integer.toString(rangeEnd);
+                }
+                rangeStart = nums[i];
+                rangeEnd = nums[i];
+                ranges.add(range);
+            }
+        }
+        
+        String range = Integer.toString(rangeStart);
+        if(rangeStart != rangeEnd) {
+            range += "->" + Integer.toString(rangeEnd);
+        }
+        ranges.add(range);
+        return ranges;
+    }
+}
