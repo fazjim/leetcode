@@ -36,3 +36,4 @@ Binary Indexed Tree
 28. Reservoir sampling for long sequence/stream random selection, the idea is  first load k, then replace item if rand < k
 30. DFS (be ware of visited nodes, HashSet visited, visited.add(node)  DFS  visited.remove(node)
 31. bit operation xor  a ^ a ^ b = b, to find duplicate or missing value
+32. Boyer-Moore for majority element,  k elements appearing n/k times:   value[k], count[k], updating count[k] on the go, finally iterate all the values 
