@@ -1,0 +1,11 @@
+public class Solution {
+    public int missingNumber(int[] nums) {
+        int n = nums.length;
+        int realTotal = (1 + n) * n / 2;
+        int total = 0;
+        for(int val: nums) {
+            total += val;
+        }
+        return realTotal - total;
+    }
+}
