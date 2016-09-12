@@ -33,3 +33,4 @@ quickselect (also partition-based algorithm), average time complexity is O(N)
 26. SegmentTree, (sum, left, right, start, end),   buildTree(buildLeft, buildRight),  update( update(left) | update(right))
 Binary Indexed Tree
 27. Patience sort for longest increasing sbusequence
+28. Reservoir sampling for long sequence/stream random selection, the idea is  first load k, then replace item if rand < k
