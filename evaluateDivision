@@ -1,0 +1,53 @@
+public class Solution {
+    public double[] calcEquation(String[][] equations, double[] values, String[][] query) {
+        HashMap<String, HashMap<String, Double>> links = new HashMap<String, HashMap<String, Double>>();
+        for(int i = 0; i < equations.length; i++) {
+            String[] equation = equations[i];
+            double val = values[i];
+            String a = equation[0];
+            String b = equation[1];
+            if(!links.containsKey(a)) {
+                HashMap<String, Double> map = new HashMap<String, Double>();
+                links.put(a, map);
+            }
+            links.get(a).put(b, val);
+            if(!links.containsKey(b)) {
+                HashMap<String, Double> map = new HashMap<String, Double>();
+                links.put(b, map);
+            }
+            links.get(b).put(a, 1.0/val);
+        }
+        
+        int qL = query.length;
+        double[] vals = new double[qL];
+        HashSet<String> visited = new HashSet<String>();
+        for(int i = 0; i < query.length; i++) {
+            String a = query[i][0];
+            String b = query[i][1];
+            vals[i] = helper(links, a, b, visited);
+        }
+        return vals;
+    }
+    
+    public double helper(HashMap<String, HashMap<String, Double>> links, String a, String b, HashSet<String> visited) {
+        if(links.containsKey(a)) {
+            if(a.equals(b)) return 1.0;
+            HashMap<String, Double> connects = links.get(a);
+            Iterator<String> it = connects.keySet().iterator();
+            while(it.hasNext()) {
+                String connect = it.next();
+                if(!visited.contains(connect)) {
+                    visited.add(connect);
+                    double val = helper(links, connect, b, visited);
+                    visited.remove(connect);
+                    if(val != -1.0) {
+                        return val * connects.get(connect);
+                    }
+                }
+            }
+            return -1.0;
+        } else {
+            return -1.0;
+        }
+    }
+}
