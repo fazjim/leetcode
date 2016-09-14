@@ -1,0 +1,85 @@
+public class WordDictionary {
+    TrieNode rootNode = new TrieNode();
+    // Adds a word into the data structure.
+    public void addWord(String word) {
+        TrieNode node = rootNode;
+        for(int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if(!node.contains(c)) {
+                node.add(c);
+            }
+            node = node.get(c);
+        }
+        node.setIsWord(true);
+    }
+
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    public boolean search(String word) {
+        TrieNode node = rootNode;
+        return searchHelper(word, node, 0);
+    }
+    
+    public boolean searchHelper(String word, TrieNode node, int index) {
+        char c = word.charAt(index);
+        if(index == word.length() - 1) {
+            if(c == '.') {
+                for(int i = 0; i < 26; i++) {
+                    char tmp = (char)(i + 'a');
+                    if(node.contains(tmp) && node.get(tmp).isWord()) return true;
+                }
+                return false;
+            } else {
+                if(!node.contains(c)) return false;
+                return node.get(c).isWord();
+            }
+        }
+        if(c == '.') {
+            for(int i = 0; i < 26; i++) {
+                char tmp = (char)(i + 'a');
+                if(node.contains(tmp)) {
+                  boolean val = searchHelper(word, node.get(tmp), index + 1);
+                  if(val == true) return true;
+                } 
+            }
+            return false;
+        } else {
+            if(!node.contains(c))  return false;
+            return searchHelper(word, node.get(c), index + 1);
+        }
+    }
+}
+class TrieNode {
+    TrieNode[] children = new TrieNode[26];
+    boolean isWord = false;
+    public boolean contains(char c) {
+        int index = c - 'a';
+        if(children[index] == null) return false;
+        else return true;
+    }
+    
+    public void add(char c) {
+        int index = c - 'a';
+        if(children[index] == null)
+            children[index] = new TrieNode();
+    }
+    
+    
+    public TrieNode get(char c) {
+        int index = c - 'a';
+        return children[index];
+    }
+    
+    public void setIsWord(boolean isWord) {
+        this.isWord = isWord;
+    }
+    
+    public boolean isWord() {
+        return this.isWord;
+    }
+}
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary = new WordDictionary();
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
