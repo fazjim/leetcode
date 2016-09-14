@@ -1,0 +1,17 @@
+public class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        TreeSet<Integer> bst = new TreeSet<Integer>();
+        for(int i = 0; i < nums.length; i++) {
+            Integer floor = bst.floor(nums[i] + t);
+            Integer ceil = bst.ceiling(nums[i] - t);
+            if((floor != null && floor >= nums[i]) || (ceil != null && ceil <= nums[i])) {
+                return true;
+            }
+            bst.add(nums[i]);
+            if(i >= k) {
+                bst.remove(nums[i-k]);
+            }
+        }
+        return false;
+    }
+}
