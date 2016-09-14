@@ -37,3 +37,4 @@ Binary Indexed Tree
 30. DFS (be ware of visited nodes, HashSet visited, visited.add(node)  DFS  visited.remove(node)
 31. bit operation xor  a ^ a ^ b = b, to find duplicate or missing value
 32. Boyer-Moore for majority element,  k elements appearing n/k times:   value[k], count[k], updating count[k] on the go, finally iterate all the values 
+33. TreeSet is the java implementation of BST, has function floor(int) and ceiling(int).
