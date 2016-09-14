@@ -28,7 +28,7 @@ gcd(x, y) = gcd (y, x-y)   ||  gcd(x, y) == gcd (y, x % y)
 22. BucketSort when requires good time complexity, idea: use the space to record frequency or sorting information
 23. DFS with List filling :    DFS(next, list) , list.add(0, current)
 24. Quicksort  (Average O(Nlgn))start with n-1,  set two cursors i and j, compare val, if less swap and move, if large stop i and keep moving j 
-quickselect (also partition-based algorithm), average time complexity is O(N)
+quickselect (also partition-based algorithm), average time complexity is O(N), for finding nth smallest/largest item (faster than heap)
 25. subsequence (does not require consecutive characters, thus once the previous one matches, it matches), but substr requires consecutive order, and thus requires KMP
 26. SegmentTree, (sum, left, right, start, end),   buildTree(buildLeft, buildRight),  update( update(left) | update(right))
 Binary Indexed Tree
