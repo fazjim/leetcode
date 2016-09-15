@@ -1,0 +1,41 @@
+public class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        HashMap<Integer, HashSet<Integer>> links = new HashMap<Integer, HashSet<Integer>>();
+        for(int[] req: prerequisites) {
+            int i = req[0];
+            int j = req[1];
+            if(!links.containsKey(i)) {
+                links.put(i, new HashSet<Integer>());
+            }
+            links.get(i).add(j);
+        }
+        
+        boolean[] marked = new boolean[numCourses];
+        boolean[] visited = new boolean[numCourses];
+        for(int i = 0; i < numCourses; i++) {
+            if(!topo(links, i, marked, visited)) return false;
+        }
+        return true;
+    }
+    
+    public boolean topo(HashMap<Integer, HashSet<Integer>> links, int s,  boolean[] marked, boolean[] visited) {
+        marked[s] = true;
+        visited[s] = true;
+        if(links.containsKey(s)) {
+            HashSet<Integer> connectedNodes = links.get(s);
+        
+            for(Integer next: connectedNodes) {
+                if(!marked[next]) {
+                    boolean val =  topo(links, next, marked, visited);
+                    if(val == false) return false;
+                } else {
+                    if(visited[next]) {
+                        return false;
+                    }
+                }
+            }
+        }
+        visited[s] = false;
+        return true;
+    }
+}
