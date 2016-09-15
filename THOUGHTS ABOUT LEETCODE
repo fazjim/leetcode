@@ -38,3 +38,4 @@ Binary Indexed Tree
 31. bit operation xor  a ^ a ^ b = b, to find duplicate or missing value
 32. Boyer-Moore for majority element,  k elements appearing n/k times:   value[k], count[k], updating count[k] on the go, finally iterate all the values 
 33. TreeSet is the java implementation of BST, has function floor(int) and ceiling(int).
+34. BFS and DFS, BFS using queue, DFS using stack. in tree traveral, does not need to set visited because it is impossible to traverse back, otherwise must set visited[node] = true to avoid circle
