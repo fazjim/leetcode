@@ -39,3 +39,4 @@ Binary Indexed Tree
 32. Boyer-Moore for majority element,  k elements appearing n/k times:   value[k], count[k], updating count[k] on the go, finally iterate all the values 
 33. TreeSet is the java implementation of BST, has function floor(int) and ceiling(int).
 34. BFS and DFS, BFS using queue, DFS using stack. in tree traveral, does not need to set visited because it is impossible to traverse back, otherwise must set visited[node] = true to avoid circle
+35. 2sum, 3sum, 4sum,   first sort the array, then set two pointers and keep moving pointers; to save time, use HashMap and store the values, use HashSet to remove duplicates, be aware of the case where  total = 2 * sum.
