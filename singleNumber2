@@ -19,6 +19,7 @@ public class Solution {
 }
 
 //Solution from Discuss
+//https://discuss.leetcode.com/topic/34725/my-own-explanation-of-bit-manipulation-method-might-be-easier-to-understand/2
 class Solution {
   public:
     int singleNumber(vector<int>& nums) {
