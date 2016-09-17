@@ -1,0 +1,34 @@
+public class Solution {
+    public int singleNumber(int[] nums) {
+        HashMap<Integer, Integer> numCounts = new HashMap<Integer, Integer>();
+        for(int i : nums) {
+            if(numCounts.containsKey(i)) {
+                numCounts.put(i, numCounts.get(i) + 1);
+            } else {
+                numCounts.put(i, 1);
+            }
+        }
+        
+        Iterator<Integer> it = numCounts.keySet().iterator();
+        while(it.hasNext()) {
+            int num = it.next();
+            if(numCounts.get(num) == 1) return num;
+        }
+        return 0;
+    }
+}
+
+//Solution from Discuss
+class Solution {
+  public:
+    int singleNumber(vector<int>& nums) {
+        int counterOne = 0;
+        int counterTwo = 0;
+        
+        for (int i = 0; i < nums.size(); i++){
+            counterOne = (~counterTwo) & (counterOne ^ nums[i]);
+            counterTwo = (~counterOne) & (counterTwo ^ nums[i]);
+        }
+        return counterOne;
+    }
+};
