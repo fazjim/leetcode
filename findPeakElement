@@ -24,7 +24,7 @@ public class Solution {
 }
 
 
-//binary search version
+//binary search version from Discuss
 public class Solution {
     public int findPeakElement(int[] nums) {
         //corner case
