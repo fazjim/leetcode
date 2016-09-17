@@ -42,3 +42,4 @@ Binary Indexed Tree
 35. 2sum, 3sum, 4sum,   first sort the array, then set two pointers and keep moving pointers; to save time, use HashMap and store the values, use HashSet to remove duplicates, be aware of the case where  total = 2 * sum.
 36. merge sort,  cut in half, sort the first half, sort the second half, and then merge the sorted result
 37. master theorem (https://en.wikipedia.org/wiki/Master_theorem):   T(n) = T(n/2) + O(1) -> O(logn)  T(n) = 2T(n/2) + O(1) ->  O(n)   T(n) = 2T(n/2) + O(n) -> O(nlogn)
+38. Preorder: node -> left -> right (dfs is the iterative solution),   In order: left -> node -> right,  Post order: left -> right -> node  
