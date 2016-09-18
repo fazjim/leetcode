@@ -1,0 +1,30 @@
+public class Solution {
+    public List<String> readBinaryWatch(int num) {
+        List<String> times = new ArrayList<String>();
+        for(int i = 0; i <= 11; i++) {
+            for(int j = 0; j <= 59; j++) {
+                int numI = countBits(i);
+                int numJ = countBits(j);
+                if(numI + numJ == num) {
+                    String hourStr = Integer.toString(i);
+                    String minStr = Integer.toString(j);
+                    if(j < 10) minStr = "0" + minStr;
+                    times.add(hourStr + ":" + minStr);
+                }
+            }
+        }
+        return times;
+    }
+    
+    public int countBits(int i) {
+        int count = 0;
+        while(i != 0) {
+            if((i & 1) == 1) {
+                count++;            
+            }
+            i = i>>1;
+        }
+        return count;
+    }
+}
+
