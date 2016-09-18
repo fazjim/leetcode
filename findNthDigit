@@ -1,0 +1,27 @@
+public class Solution {
+    public int findNthDigit(int n) {
+        int digit = 1;
+        int lastNum = 0;
+        while(n != 0) {
+            int max = Integer.MAX_VALUE;
+            if(Math.pow(10,digit) > Integer.MAX_VALUE/ 10) {
+                max = Integer.MAX_VALUE;
+            } else {
+                max = (int)(Math.pow(10, digit) * digit);
+            }
+            if(n < max) {
+                int index = (n - 1) / digit + 1;
+                int pos = lastNum + index;
+                int i = (n - 1) % digit;
+                
+                char c = Integer.toString(pos).charAt(i);
+                return (int)(c - '0');
+            } else {
+                n -= (Math.pow(10, digit) - Math.pow(10, digit - 1) ) * digit;
+                lastNum = ((int)Math.pow(10,digit)) - 1;
+                digit++;
+            }
+        }
+        return 0;
+    }
+}
