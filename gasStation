@@ -1,0 +1,23 @@
+public class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int length = gas.length;
+        if(length == 0) return -1;
+        int[] remain = new int[length];
+        for(int i = 0; i < length; i++) {
+            remain[i] = gas[i] - cost[i];
+        }
+        int start = length; 
+        int end = 0;
+        int sum = 0;
+        while (start != end) {
+            if(sum < 0) {
+                sum += remain[--start];
+            } else {
+                sum += remain[end++];
+            }
+        }
+        if(sum < 0) return -1;
+        if(start == length) return 0;
+        return start;
+    }
+}
