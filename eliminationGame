@@ -1,0 +1,14 @@
+public class Solution {
+    public int lastRemaining(int n) {
+        return helper(1, n, 1, true);
+    }
+    
+    public int helper(int start, int num, int step, boolean right) {
+        if(num == 1) return start;
+        int newStart = start;
+        if(right == true || num % 2 == 1) {
+            newStart = start + step;
+        }
+        return helper(newStart, num/2, step * 2, !right);
+    }
+}
