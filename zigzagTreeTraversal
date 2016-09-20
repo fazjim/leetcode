@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Stack<TreeNode> oddLevel = new Stack<TreeNode>();
+        Stack<TreeNode> evenLevel = new Stack<TreeNode>();
+        oddLevel.push(root);
+        while(!oddLevel.empty() || !evenLevel.empty()) {
+            List<Integer> curr = new ArrayList<Integer>();
+            while(!oddLevel.empty()) {
+                TreeNode node = oddLevel.pop();
+                if(node != null) {
+                    curr.add(node.val);
+                    evenLevel.push(node.left);
+                    evenLevel.push(node.right);
+                }
+            }
+            if(curr.size() > 0) {
+                result.add(curr);
+                curr = new ArrayList<Integer>();
+            }
+            while(!evenLevel.empty()) {
+                TreeNode node = evenLevel.pop();
+                if(node != null) {
+                    curr.add(node.val);
+                    oddLevel.push(node.right);
+                    oddLevel.push(node.left);
+                }
+            }
+            if(curr.size() > 0) {
+                result.add(curr);
+            }
+        }
+        return result;
+    }
+    
+}
