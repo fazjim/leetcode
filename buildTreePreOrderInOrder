@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return helper(inorder, 0, inorder.length - 1, preorder, 0);
+    }
+    
+    public TreeNode helper(int[] inorder, int start, int end, int[] preorder, int pos) {
+        if(start > end) return null;
+        TreeNode root = new TreeNode(preorder[pos]);
+        if(start == end) return root;
+        int index = 0;
+        for(index = start; index <= end; index++) {
+            if(inorder[index] == preorder[pos]) {
+                break;
+            }
+        }
+        int leftSize = index - start;
+        TreeNode left = helper(inorder, start, index - 1, preorder, pos + 1);
+        TreeNode right = helper(inorder, index + 1, end, preorder, pos + leftSize + 1);
+        root.left = left;
+        root.right = right;
+        return root;
+    }
+}
