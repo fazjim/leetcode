@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        if(n == 0) return new ArrayList<TreeNode>();
+        List<TreeNode>[] dp = new List[n+1];
+        dp[0] = new ArrayList<TreeNode>();
+        dp[0].add(null);
+        
+        for(int i = 1; i <= n; i++) {
+            List<TreeNode> results = new ArrayList<TreeNode>();
+            for(int j = 1; j <= i; j++) {
+                List<TreeNode> lefts = dp[j-1];
+                List<TreeNode> rights = dp[i-j];
+                for(TreeNode left: lefts) {
+                    TreeNode newLeft = cloneTree(left, 0);
+                    for(TreeNode right: rights) {
+                        TreeNode newRight = cloneTree(right, j);
+                        TreeNode root = new TreeNode(j);
+                        root.left = newLeft;
+                        root.right = newRight;
+                        results.add(root);
+                    }
+                }
+            }
+            dp[i] = results;
+        }
+        
+        return dp[n];
+    }
+    
+    public TreeNode cloneTree(TreeNode root, int offset) {
+        if(root == null) return null;
+        TreeNode newNode = new TreeNode(root.val + offset);
+        newNode.left = cloneTree(root.left, offset);
+        newNode.right = cloneTree(root.right, offset);
+        return newNode;
+    }
+    
+}
