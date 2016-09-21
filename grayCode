@@ -1,0 +1,17 @@
+public class Solution {
+    public List<Integer> grayCode(int n) {
+        if(n == 0) {
+            List<Integer> array = new ArrayList<Integer>();
+            array.add(0);
+            return array;
+        } else {
+            List<Integer> lastArray = grayCode(n-1);
+            int addOn = 1 << (n - 1);
+            int lastSize = lastArray.size();
+            for(int i = lastSize -1 ; i >= 0; i--) {
+                lastArray.add(lastArray.get(i) + addOn);
+            }
+            return lastArray;
+        }
+    }
+}
