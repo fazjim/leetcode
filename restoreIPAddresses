@@ -1,0 +1,42 @@
+public class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> results = new ArrayList<String>();
+        dfs(s, 0, s.length()-1, results, "", 0);
+        return results;
+    }
+    
+    public void dfs(String s, int start, int end, List<String> results, String prev, int segs) {
+        if(segs > 3) return;
+        if(segs == 3) {
+            int minus = end - start;
+            if(minus >= 0 && minus <= 2) {
+                String tmp = s.substring(start, end + 1);
+                if(tmp.equals("0")||!tmp.startsWith("0")) {
+                    int val = Integer.parseInt(tmp);
+                    if(val >= 0 && val <= 255) {
+                        String result = prev + "." + tmp;
+                        results.add(result);
+                    }
+                }
+            }
+        } else {
+            int currentEnd = start + 2;
+            currentEnd = Math.min(currentEnd, end);
+            for(int i = start; i <= currentEnd; i++) {
+                String tmp = s.substring(start, i+1);
+                if(tmp.equals("0") || !tmp.startsWith("0")) {
+                    int val = Integer.parseInt(tmp);
+                    if(val >= 0 && val <= 255) {
+                        String next = prev;
+                        if(next.length() > 0) {
+                            next = next + "." + tmp;
+                        } else {
+                            next = tmp;
+                        }
+                        dfs(s, i+1, end, results, next, segs + 1);
+                    }
+                }
+            }
+        }
+    }
+}
