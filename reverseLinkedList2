@@ -42,3 +42,40 @@ public class Solution {
         return head;
     }
 }
+
+//Clearer solution from Discuss
+public ListNode reverseBetween(ListNode head, int m, int n) {
+        if (head == null || m < 1 || n <= m) {
+            return head;
+        }
+
+        int count = n - m +1;
+        ListNode savedHead = head;
+        ListNode newHead, tail, curr, mPre = null;
+        int tempM = m;
+        while (--tempM > 0) {
+            mPre = head;
+            head = head.next;
+        }
+
+        newHead = head;
+        tail = newHead;
+        curr = newHead.next;
+
+        while (--count > 0 && curr != null) {
+            ListNode next = curr.next;
+            curr.next = newHead;
+            newHead = curr;
+            curr = next;
+        }
+
+        tail.next = curr;
+
+        if (m == 1) {
+            return newHead;
+        }
+
+        mPre.next = newHead;
+
+        return savedHead;
+    }
