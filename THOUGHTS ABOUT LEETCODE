@@ -43,3 +43,4 @@ Binary Indexed Tree
 36. merge sort,  cut in half, sort the first half, sort the second half, and then merge the sorted result
 37. master theorem (https://en.wikipedia.org/wiki/Master_theorem):   T(n) = T(n/2) + O(1) -> O(logn)  T(n) = 2T(n/2) + O(1) ->  O(n)   T(n) = 2T(n/2) + O(n) -> O(nlogn)
 38. Preorder: node -> left -> right (dfs is the iterative solution),   In order: left -> node -> right,  Post order: left -> right -> node  
+39. ListNode problems:  Create a dummy node, set the current node curr to dummynode, use curr.next = sth curr = curr.next to updates the node, and finally returns dummy.next
