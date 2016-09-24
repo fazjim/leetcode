@@ -1,0 +1,39 @@
+public class Solution {
+    public boolean search(int[] nums, int target) {
+        return helper(nums, 0, nums.length - 1, target);
+    }
+    
+    public boolean helper(int[] nums, int start, int end, int target) {
+        if(start > end) return false;
+        int mid = (start + end) / 2;
+        if(nums[mid] == target) return true;
+        if(nums[start] < nums[mid]) {
+            //left half is sorted
+            if(target > nums[mid]) {
+                return helper(nums, mid + 1, end, target);
+            } else {
+                if(target < nums[start]) {
+                    return helper(nums, mid+1, end, target);
+                } else {
+                    return helper(nums, start, mid-1, target);
+                }
+            }
+        } else if(nums[end] > nums[mid]) {
+            //right half is sorted
+            if(target < nums[mid]) {
+                return helper(nums, start, mid-1, target);
+            } else {
+                if(target > nums[end]) {
+                    return helper(nums, start, mid-1, target);
+                } else {
+                    return helper(nums, mid+1, end, target);
+                }
+            }
+        } else if(nums[start] == nums[mid]) {
+            return helper(nums, start+1, end, target); //cannot decide which half is sorted
+        } else if(nums[end] == nums[mid]) {
+            return helper(nums, start, end-1, target);
+        }
+        return false;
+    }
+}
