@@ -44,3 +44,4 @@ Binary Indexed Tree
 37. master theorem (https://en.wikipedia.org/wiki/Master_theorem):   T(n) = T(n/2) + O(1) -> O(logn)  T(n) = 2T(n/2) + O(1) ->  O(n)   T(n) = 2T(n/2) + O(n) -> O(nlogn)
 38. Preorder: node -> left -> right (dfs is the iterative solution),   In order: left -> node -> right,  Post order: left -> right -> node  
 39. ListNode problems:  Create a dummy node, set the current node curr to dummynode, use curr.next = sth curr = curr.next to updates the node, and finally returns dummy.next
+40. Two pointer approach for duplication removal or reordering,  int i = 0; for(j: end), if(nums[j] != nums[i]) {i++, nums[i] = nums[j];}
