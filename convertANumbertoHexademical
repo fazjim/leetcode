@@ -1,0 +1,76 @@
+public class Solution {
+    public String toHex(int num) {
+        if(num >= 0) return toHexPos(num);  
+        else {
+           int newVal = num + 1;
+           return toReverse(toHexPos(-newVal));
+        }
+    }
+    
+    public String toHexPos(int num) {
+        if(num == 0) return "0";
+        StringBuffer sb = new StringBuffer();
+        while(num != 0) {
+            int curr = num % 16;
+            num = num / 16;
+            sb.insert(0, toChar(curr));
+        }
+        return sb.toString();
+    }
+    
+    public String toReverse(String str) {
+        StringBuffer sb = new StringBuffer(str);
+        for(int i = 0; i < sb.length(); i++) {
+            sb.setCharAt(i, toChar(15 - getInt(sb.charAt(i))));
+        }
+        int rest = 8 - sb.length();
+        for(int j = 0; j < rest; j++) {
+            sb.insert(0, 'f');
+        }
+        return sb.toString();
+    }
+    
+    
+    public int getInt(char c) {
+        int val = 0;
+        switch(c) {
+            case 'a': 
+                val = 10;
+                break;
+            case 'b': 
+                val = 11;
+                break;
+            case 'c': 
+                val = 12;
+                break;
+            case 'd': 
+                val = 13;
+                break;
+            case 'e': 
+                val = 14;
+                break;
+            case 'f': 
+                val = 15;
+                break;
+            default: 
+                val = (int)(c - '0');
+                break;
+        }
+        return val;
+    }
+    
+    
+    public char toChar(int i) {
+        if(i < 10) {
+            return (char)(i+'0');
+        } else {
+            if(i == 10) return 'a';
+            else if(i == 11) return 'b';
+            else if(i == 12) return 'c';
+            else if(i == 13) return 'd';
+            else if(i == 14) return 'e';
+            else if(i == 15) return 'f';
+        }
+        return 'n';
+    }
+}
