@@ -1,0 +1,45 @@
+public class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        List<People> allPeople = new ArrayList<People>();
+        int row = people.length;
+        int[][] newQueue = new int[row][2];
+        
+        for(int i = 0; i < row; i++) {
+            People p = new People();
+            p.height = people[i][0];
+            p.count = people[i][1];
+            p.realCount = people[i][1];
+            allPeople.add(p);
+        }
+        
+        int index = 0;
+        while(allPeople.size() > 0) {
+            Collections.sort(allPeople);
+            People first = allPeople.get(0);
+            int height = first.height;
+            for(int i = 1; i < allPeople.size(); i++) {
+                People p = allPeople.get(i);
+                if(p.height <= height) {
+                    p.count--;
+                }
+            }
+            newQueue[index][0] = first.height;
+            newQueue[index][1] = first.realCount;
+            allPeople.remove(0);
+            index++;
+        }
+        return newQueue;
+    }
+    
+}
+
+class People implements Comparable<People>{
+    int height;
+    int count;
+    int realCount;
+    
+    public int compareTo(People p) {
+        if(count - p.count != 0) return (count- p.count);
+        return height - p.height;
+    }
+}
