@@ -11,7 +11,8 @@ public class Solution {
         if(k == 0) {
             result.add(new ArrayList(current));
         } else {
-            for(int j = i+1; j <= n; j++) {
+            //here the n - k + 1 instead of n will speed up the process
+            for(int j = i+1; j <= n - k + 1; j++) {
                 current.add(j);
                 dfs(result, current, j, n, k-1);
                 current.remove(current.size()-1);
