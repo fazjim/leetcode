@@ -1,0 +1,30 @@
+public class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix.length <= 0) return false;
+        return helper(matrix, 0, 0, matrix.length - 1, matrix[0].length-1, target);
+    }
+    
+    public boolean helper(int[][] matrix, int startI, int startJ, int endI, int endJ, int target) {
+        if(startI > endI) return false;
+        if(startI != endI) {
+            int midI = (startI + endI) / 2;
+            if(target < matrix[midI][0]) {
+                return helper(matrix, startI, startJ, midI - 1, matrix[0].length -1, target);
+            } else if(target > matrix[midI][matrix[0].length-1]) {
+                return helper(matrix, midI+1, 0, endI, endJ, target);
+            } else {
+                return helper(matrix, midI, 0, midI, matrix[0].length-1, target); 
+            }
+        } else {
+            if(startJ > endJ) return false;
+            int midJ = (startJ + endJ) / 2;
+            if(matrix[startI][midJ] == target) {
+                return true;
+            } else if(target < matrix[startI][midJ]) {
+                return helper(matrix, startI, startJ, startI, midJ-1, target);
+            } else {
+                return helper(matrix, startI, midJ+1, startI, endJ, target);
+            }
+        }
+    }
+}
