@@ -49,3 +49,56 @@ public class Solution {
         }
     }
 }
+
+//Other solution from Discuss
+public void setZeroes(int[][] matrix) {
+        int row = matrix.length;
+        if(row==0){
+            return;
+        }
+        
+        int col = matrix[0].length;
+        if(col==0){
+            return;
+        }
+        
+        // Check if needs to zero first row
+        boolean isFirstRowZero = false;
+        for(int i : matrix[0]){
+            if(i==0){
+                isFirstRowZero = true;
+                break;
+            }
+        }
+        
+        boolean isRowZero;
+        for(int r=1;r<row;r++){
+            isRowZero = false;
+            
+            for(int c=0;c<col;c++){
+                if(matrix[r][c]==0){
+                    // Save the zero column's index in first row
+                    matrix[0][c]=0;
+                    isRowZero = true;
+                }
+            }
+            
+            if(isRowZero){
+                Arrays.fill(matrix[r], 0);
+            }
+        }
+        
+        for(int c=0;c<col;c++){
+            // Zero the column according to the stat saved in first row
+            if(matrix[0][c]==0){
+                for(int r=1;r<row;r++){
+                    matrix[r][c]=0;
+                }
+            }
+        }
+        
+        // Zero first row if needed
+        if(isFirstRowZero){
+            Arrays.fill(matrix[0], 0);
+        }
+    }
