@@ -1,0 +1,43 @@
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        if(n == 0) return matrix;
+        helper(matrix, 0, n - 1, 0, n-1, 1);
+        return matrix;
+    }
+    
+    public void helper(int[][] matrix, int top, int bottom, int left, int right, int number) {
+        if(top > bottom || left > right) return;
+        if(top == bottom && left == right) {
+            matrix[top][left] = number;
+        } else if(top == bottom) {
+            for(int i = left; i<= right; i++) {
+                matrix[top][i] = number;
+                number++;
+            }
+        } else if(left == right) {
+            for(int i = top; i<= bottom; i++) {
+                matrix[i][left] = number;
+                number ++;
+            }
+        } else {
+            for(int i = left; i < right; i++) {
+                matrix[top][i] = number;
+                number ++;
+            }
+            for(int i = top; i < bottom; i++) {
+                matrix[i][right] = number;
+                number ++;
+            }
+            for(int i = right; i > left; i--) {
+                matrix[bottom][i] = number;
+                number ++;
+            }
+            for(int i = bottom; i > top; i--) {
+                matrix[i][left] = number;
+                number ++;
+            }
+            helper(matrix, top + 1, bottom - 1, left + 1, right - 1, number);
+        }
+    }
+ }
