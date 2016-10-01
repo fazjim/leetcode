@@ -1,0 +1,33 @@
+public class Solution {
+    public String getPermutation(int n, int k) {
+        int[] factorial = new int[n];
+        factorial[0] = 1;
+        for(int i = 1; i < n; i++) {
+            factorial[i] = (i+1) * factorial[i-1];
+        }
+        
+        List<Integer> numbers = new ArrayList<Integer>();
+        for(int i = 1; i <= n; i++) {
+            numbers.add(i);
+        }
+        
+        int remainingN = n - 1;
+        k--;
+        StringBuilder builder = new StringBuilder();
+        for(int i = 1; i <= n; i++) {
+            int facts = 1;
+            if(remainingN >= 1) {
+              facts = factorial[remainingN - 1];
+            }
+            int digit = k / facts;
+            builder.append(numbers.get(digit));
+            numbers.remove(digit);
+            remainingN--;
+            k = k % facts;
+        }
+        if(builder.length() == 0) return "";
+        return builder.toString();
+    }
+    
+
+}
