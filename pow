@@ -1,0 +1,29 @@
+public class Solution {
+    public double myPow(double x, int n) {
+        HashMap<Integer, Double> index = new HashMap<Integer, Double>();
+        int newN = n;
+        if(n < 0) {
+            if(n == Integer.MIN_VALUE) {
+                newN = Integer.MAX_VALUE - 1;
+            } else {
+                newN = -n;
+            }
+        }
+        double val = helper(x, newN, index);
+        if(n < 0) return 1/val;
+        else return val;
+    }
+    
+    public double helper(double x, int n, HashMap<Integer, Double> index) {
+        if(n == 0) return 1;
+        if(n == 1) return x;
+        if(index.containsKey(n)) return index.get(n);
+        
+        double val = helper(x, n/2, index) * helper(x, n/2, index);
+        if(n % 2 == 1) {
+            val = val * x;
+        }
+        index.put(n, val);
+        return val;
+    }
+}
