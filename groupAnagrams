@@ -1,0 +1,57 @@
+public class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<Integer> primes = generatePrime(20000);
+        int[] mapping = getMapping(primes);
+        HashMap<Double, List<String>> anagrams = new HashMap<Double, List<String>>();
+        for(String str: strs) {
+            double hashCode = getHash(str, mapping);
+            if(!anagrams.containsKey(hashCode)) {
+                List<String> array = new ArrayList<String>();
+                anagrams.put(hashCode, array);
+            }
+            anagrams.get(hashCode).add(str);
+        }
+        Iterator<Double> it = anagrams.keySet().iterator();
+        List<List<String>> values = new ArrayList<List<String>>();
+        while(it.hasNext()) {
+            double val = it.next();
+            values.add(anagrams.get(val));
+        }
+        return values;
+    }
+    
+    public double getHash(String str, int[] mapping) {
+        double total = 1.0;
+        for(int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            int index = (int)(c - 'a');
+            total = total * mapping[index];
+        }
+        return total;
+    }
+    
+    public List<Integer> generatePrime(int n) {
+        boolean[] isPrime = new boolean[n];
+        Arrays.fill(isPrime, true);
+        List<Integer> primes = new ArrayList<Integer>();
+        for(int i = 2; i * i < n; i++) {
+            if(isPrime[i] == true) {
+                primes.add(i);
+                for(int j = i; i * j < n; j++) {
+                    isPrime[i*j] = false;
+                }
+            }
+        }
+        return primes;
+    }
+    
+    public int[] getMapping(List<Integer> primes) {
+        int[] mapping = new int[26];
+        for(int i = 0; i < 26; i++) {
+            mapping[i] = primes.get(i);
+        }
+        return mapping;
+    }
+    
+
+}
