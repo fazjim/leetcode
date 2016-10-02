@@ -1,0 +1,21 @@
+public class Solution {
+    public int searchInsert(int[] nums, int target) {
+        return helper(nums, 0, nums.length - 1, target);
+    }
+    
+    public int helper(int[] nums, int start, int end, int target) {
+        if(start > end) return -1;
+        int mid = (start + end) / 2;
+        if(nums[mid] == target) {
+            return mid;
+        } else if(nums[mid] > target) {
+            int index = helper(nums, start, mid - 1, target);
+            if(index == -1) return start;
+            else return index;
+        } else {
+            int index = helper(nums, mid+1, end, target);
+            if(index == -1) return end + 1;
+            else return index;
+        }
+    }
+}
