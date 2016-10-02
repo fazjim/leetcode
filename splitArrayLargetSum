@@ -1,0 +1,36 @@
+public class Solution {
+    public int splitArray(int[] nums, int m) {
+        Arrays.sort(nums);
+        long[] split = new long[m];
+        int index = m - 1;
+        for(int i = nums.length - 1; i>=0; i--) {
+            if(index != 0) {
+                split[index] = (long)nums[i];
+                index--;
+            } else {
+                split[index] += (long)nums[i];
+            }
+        }
+
+        PriorityQueue<Long> queue = new PriorityQueue<Long>();
+        for(int i = 1; i < m; i++) {
+            queue.offer(split[i]);
+        }
+        
+        long max = Math.max(split[0], split[m-1]);
+        int reduceIndex = 0;
+        while(reduceIndex <= nums.length - m && queue.size() > 0) {
+            long small = queue.poll();
+            long newVal = small + nums[reduceIndex];
+            if(newVal < max) {
+                split[0] = split[0] - nums[reduceIndex];
+                reduceIndex ++;
+                max = Math.max(split[0], newVal);
+                queue.offer(newVal);
+            } else {
+                break;
+            }
+        }
+        return (int)max;
+    }
+}
