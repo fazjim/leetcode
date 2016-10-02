@@ -1,0 +1,38 @@
+public class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int range1 = helperRange1(nums, target, 0, nums.length-1);
+        int range2 = helperRange2(nums, target, 0, nums.length-1);
+        int[] range = new int[2];
+        range[0] = range1;
+        range[1] = range2;
+        return range;
+    }
+    
+    public int helperRange1(int[] nums, int target, int start, int end) {
+        if(start > end) return -1;
+        int mid = (start + end) / 2;
+        if(nums[mid] == target) {
+            int next = helperRange1(nums, target, start, mid-1);
+            if(next == -1) return mid;
+            else return next;
+        } else if(nums[mid] < target) {
+            return helperRange1(nums, target, mid + 1, end);
+        } else {
+            return helperRange1(nums, target, start, mid-1);
+        }
+    }
+    
+    public int helperRange2(int[] nums, int target, int start, int end) {
+        if(start > end) return -1;
+        int mid = (start + end) / 2;
+        if(nums[mid] == target) {
+            int next = helperRange2(nums, target, mid+1, end);
+            if(next == -1) return mid;
+            else return next;
+        } else if(nums[mid] < target) {
+            return helperRange2(nums, target, mid + 1, end);
+        } else {
+            return helperRange2(nums, target, start, mid-1);
+        }
+    }
+}
