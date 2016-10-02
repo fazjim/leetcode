@@ -1,0 +1,63 @@
+public class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> results = new ArrayList<String>();
+        if(digits.length() == 0) return results;
+        StringBuilder current = new StringBuilder();
+        helper(results, current, digits, 0);
+        return results;
+    }
+    
+    public void helper(List<String> results, StringBuilder current, String digits, int index) {
+        if(index == digits.length() && current.length() > 0) {
+            results.add(current.toString());
+        } else {
+            int digit = (int)(digits.charAt(index) - '0');
+            char[] letters = getLetters(digit);
+            for(char c: letters) {
+                current.append(c);
+                helper(results, current, digits, index + 1);
+                current.deleteCharAt(current.length() - 1);
+            }
+        }
+    }
+    
+    public char[] getLetters(int digit) {
+        char[] letters = new char[0];
+        switch(digit) {
+            case 2: 
+                letters = getLetters('a', 3);
+                break;
+            case 3: 
+                letters = getLetters('d', 3);
+                break;
+            case 4:
+                letters = getLetters('g', 3);
+                break;
+            case 5:
+                letters = getLetters('j', 3);
+                break;
+            case 6:
+                letters = getLetters('m', 3);
+                break;
+            case 7:
+                letters = getLetters('p', 4);
+                break;
+            case 8:
+                letters = getLetters('t', 3);
+                break;
+            case 9:
+                letters = getLetters('w', 4);
+                break;
+            default:
+                break;
+        }
+        return letters;
+    }
+    public char[] getLetters(char startChar, int num) {
+        char[] letters = new char[num];
+        for(int i = 0; i < num; i++) {
+            letters[i] = (char) (startChar + i);
+        }
+        return letters;
+    }
+}
