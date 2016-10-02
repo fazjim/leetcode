@@ -1,0 +1,27 @@
+public class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> numArray = new ArrayList<Integer>();
+        for(int num: nums) {
+            numArray.add(num);
+        }
+        List<Integer> current = new ArrayList<Integer>();
+        dfs(result, current, numArray);
+        return result;
+    }
+    
+    public void dfs(List<List<Integer>> result, List<Integer> current, List<Integer> numArray) {
+        if(numArray.size() == 0) {
+            result.add(new ArrayList(current));
+        } else {
+            for(int i = 0; i < numArray.size(); i++) {
+                int num = numArray.get(i);
+                current.add(num);
+                numArray.remove(i);
+                dfs(result, current, numArray);
+                numArray.add(i, num);
+                current.remove(current.size() - 1);
+            }
+        }
+    }
+}
