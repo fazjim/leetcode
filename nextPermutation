@@ -1,0 +1,46 @@
+public class Solution {
+    public void nextPermutation(int[] nums) {
+        int localMin = -1;
+        for(int i = nums.length - 1; i > 0; i--) {
+            if(nums[i] > nums[i-1]) {
+                localMin = i-1;
+                break;
+            }
+        }
+        if(localMin == -1) {
+            Arrays.sort(nums);
+        } else {
+            int higher = nums[localMin + 1];
+            int higherIndex = localMin + 1;
+            for(int j = localMin + 2; j < nums.length; j++) {
+                if(nums[j] > nums[localMin] && nums[j] < higher) {
+                    higher = nums[j];
+                    higherIndex = j;
+                }
+            }
+            swap(nums, localMin, higherIndex);
+            sort(nums, localMin + 1, nums.length - 1);
+        }
+    }
+    
+    public void sort(int[] nums, int i, int j) {
+        if(i >= j) return;
+        int pivot = nums[j];
+        int smallPoint = i;
+        for(int index = i; index < j; index++) {
+            if(nums[index] <= pivot) {
+                swap(nums, index, smallPoint);
+                smallPoint++;
+            }
+        }
+        swap(nums, smallPoint, j);
+        sort(nums, i, smallPoint - 1);
+        sort(nums, smallPoint + 1, j);
+    }
+    
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
