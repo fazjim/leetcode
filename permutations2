@@ -1,0 +1,30 @@
+public class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> current = new ArrayList<Integer>();
+        List<Integer> numArray = new ArrayList<Integer>();
+        Arrays.sort(nums);
+        for(int num: nums) {
+            numArray.add(num);
+        }
+        dfs(result, current, numArray);
+        return result;
+    }
+    
+    public void dfs(List<List<Integer>> result, List<Integer> current, List<Integer> numArray) {
+        if(numArray.size() == 0) {
+            result.add(new ArrayList(current));
+        } else {
+            for(int i = 0; i < numArray.size(); i++) {
+                if(i == 0 || numArray.get(i) != numArray.get(i-1)) {
+                    int temp = numArray.get(i);
+                    current.add(temp);
+                    numArray.remove(i);
+                    dfs(result, current, numArray);
+                    current.remove(current.size() - 1);
+                    numArray.add(i, temp);
+                }
+            }
+        }
+    }
+}
