@@ -1,0 +1,28 @@
+public class Solution {
+    public int divide(int dividend, int divisor) {
+        if(divisor == 1) return dividend;
+        int sign = 1;
+        if((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0)) sign = -1;
+        if(dividend > 0) {
+            dividend = -dividend;
+        }
+        if(divisor > 0) {
+            divisor = -divisor;
+        }
+        
+        if(dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MAX_VALUE;
+        
+        int result = 0;
+        while(dividend <= divisor) {
+            int base = divisor;
+            int num = 1;
+            while (dividend - base < base) {
+                base = base << 1;
+                num = num << 1;
+            } 
+            dividend = dividend - base;
+            result += num;
+        }
+        return result * sign;
+    }
+}
