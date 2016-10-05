@@ -1,41 +1,65 @@
-import java.util.LinkedList;
-
-class Item {
-    int key;
-    int value;
-}
+//TLE solution of single linked list
 public class LRUCache {
-    private int capacity;
-    private LinkedList<Item> list;
-    
+    int maxSize = 0;
+    int currentSize = 0;
+    ListNode dummyNode;
+    ListNode end;
     public LRUCache(int capacity) {
-        this.capacity = capacity;
-        list = new LinkedList<Item>();
+        dummyNode = new ListNode();
+        end = dummyNode;
+        maxSize = capacity;
     }
     
     public int get(int key) {
-        for(Item item: list) {
-            if(item.key == key) {
-                int value = item.value;
-                Item newItem = new Item();
-                newItem.key = key;
-                newItem.value = value;
-                list.remove(item);
-                list.add(newItem);
-                return value;
+       ListNode node = getNode(key);
+       if(node == null) return -1;
+       else return node.val;
+    }
+    
+    public ListNode getNode(int key) {
+        ListNode curr = dummyNode.next;
+        ListNode prev = dummyNode;
+        while(curr != null) {
+            if(curr.key == key) {
+                if(curr != end) {
+                    prev.next = curr.next;
+                    end.next = curr;
+                    curr.next = null;
+                    end = curr;
+                }
+                return curr;
             }
+            prev = curr;
+            curr = curr.next;
         }
-        return -1;
+        return curr;
     }
     
     public void set(int key, int value) {
-        if(capacity == 0) return;
-        if(list.size() == capacity) {
-            list.remove(0);
+        ListNode node = getNode(key);
+        if(node != null) {
+            node.val = value;
+        } else {
+            ListNode newNode = new ListNode(key, value);
+            end.next = newNode;
+            end = newNode;
+            currentSize++;
+            if(currentSize > maxSize) {
+                dummyNode.next = dummyNode.next.next;
+                currentSize--;
+            }
         }
-        Item newItem = new Item();
-        newItem.key = key;
-        newItem.value = value;
-        list.add(newItem);
+    }
+}
+
+class ListNode {
+    int key;
+    int val;
+    ListNode next;
+    
+    ListNode()  {}
+    ListNode(int key, int val) {
+        this.key = key;
+        this.val = val;
     }
 }
