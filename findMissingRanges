@@ -1,0 +1,33 @@
+public class Solution {
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        List<String> results = new ArrayList<String>();
+        int l = lower;
+        int index = 0;
+        while(index < nums.length) {
+            int h = nums[index];
+            if(l < h) {
+                String str = generateStr(l, h - 1);
+                if(str != null) {
+                    results.add(str);
+                }
+            }
+            if(h == Integer.MAX_VALUE) return results;
+            l = h + 1;
+            index++;
+        }
+        String str = generateStr(l, upper);
+        if(str != null) results.add(str);
+        return results;
+    }
+    
+
+    
+    public String generateStr(int start, int end) {
+        if(start > end) return null;
+        else if(start == end) {
+            return Integer.toString(start);
+        } else {
+            return Integer.toString(start) + "->" + Integer.toString(end);
+        }
+    }
+}
