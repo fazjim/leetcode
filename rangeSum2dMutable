@@ -1,0 +1,127 @@
+public class NumMatrix {
+    int[][] numMatrix;
+    TreeNode rootNode;
+    public NumMatrix(int[][] matrix) {
+        int row = matrix.length;
+        if(row == 0) return;
+        int col = matrix[0].length;
+        numMatrix = new int[row][col];
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                numMatrix[i][j] = matrix[i][j];
+            }
+        }
+        rootNode = buildTree(0, 0, row-1, col-1, matrix);
+    }
+
+    public void update(int row, int col, int val) {
+        int diff = val - numMatrix[row][col];
+        TreeNode node = rootNode;
+        updateHelper(row, col, node, diff);
+        numMatrix[row][col] = val;
+    }
+    
+    public void updateHelper(int row, int col, TreeNode node, int diff) {
+        if(node!= null && row >= node.row1 && row <= node.row2 && col >= node.col1 && col <= node.col2) {
+            node.val += diff;
+            updateHelper(row, col, node.leftTop, diff);
+            updateHelper(row, col, node.rightTop, diff);
+            updateHelper(row, col, node.leftBottom, diff);
+            updateHelper(row, col, node.rightBottom, diff);
+        }
+    }
+
+    public TreeNode buildTree(int row1, int col1, int row2, int col2, int[][] matrix) {
+        TreeNode node = new TreeNode();
+        node.row1 = row1;
+        node.row2 = row2;
+        node.col1 = col1;
+        node.col2 = col2;
+        if(row1 == row2 && col1 == col2)  {
+            node.val = matrix[row1][col1];
+        } else if(row1 > row2 || col1 > col2) {
+            return null;
+        } else {
+            int midRow = (row1 + row2) / 2;
+            int midCol = (col1 + col2) / 2;
+            node.leftTop = buildTree(row1, col1, midRow, midCol, matrix);
+            addNode(node, node.leftTop);
+            node.rightTop = buildTree(row1, midCol+1, midRow, col2, matrix);
+            addNode(node, node.rightTop);
+            node.leftBottom = buildTree(midRow + 1, col1, row2, midCol, matrix);
+            addNode(node, node.leftBottom);
+            node.rightBottom = buildTree(midRow + 1, midCol+1, row2, col2, matrix);
+            addNode(node, node.rightBottom);
+        }
+        return node;
+    }
+
+    public void addNode(TreeNode parent, TreeNode child) {
+        if(child != null) {
+            parent.val += child.val;
+            child.parent = parent;
+        }
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        TreeNode node = rootNode;
+        return sumHelper(row1, col1, row2, col2, node);
+    }
+    
+    public int sumHelper(int row1, int col1, int row2, int col2, TreeNode node) {
+        if(node == null) return 0;
+        if(node.row1 == row1 && node.col1 == col1 && node.row2 == row2 && node.col2 == col2) {
+            return node.val;
+        } else {
+            if(row2 < node.row1 || col2 < node.col1 || row1 > node.row2 || col1 > node.col2) return 0;
+            int rowMid = (node.row1 + node.row2)/2;
+            int colMid = (node.col1 + node.col2)/2;
+            if(rowMid >= row2) {
+                if(colMid >= col2) {
+                    return sumHelper(row1, col1, row2, col2, node.leftTop);
+                } else if(colMid < col1) {
+                    return sumHelper(row1, col1, row2, col2, node.rightTop);
+                } else {
+                    return sumHelper(row1, col1, row2, colMid, node.leftTop) + sumHelper(row1, colMid + 1, row2, col2, node.rightTop);
+                }
+            } else if(rowMid < row1) {
+                if(colMid >= col2) {
+                    return sumHelper(row1, col1, row2, col2, node.leftBottom);
+                } else if(colMid < col1) {
+                    return sumHelper(row1, col1, row2, col2, node.rightBottom);
+                } else {
+                    return sumHelper(row1, col1, row2, colMid, node.leftBottom) + sumHelper(row1, colMid+1, row2, col2, node.rightBottom);
+                }
+            } else {
+                if(colMid >= col2) {
+                    return sumHelper(row1, col1, rowMid, col2, node.leftTop) + sumHelper(rowMid + 1, col1, row2, col2, node.leftBottom);
+                } else if(colMid < col1) {
+                    return sumHelper(row1, col1, rowMid, col2, node.rightTop) + sumHelper(rowMid +1, col1, row2, col2, node.rightBottom);
+                } else {
+                    return sumHelper(row1, col1, rowMid, colMid, node.leftTop) + sumHelper(row1, colMid+1, rowMid, col2, node.rightTop) + sumHelper(rowMid + 1, col1, row2, colMid, node.leftBottom) + sumHelper(rowMid + 1, colMid+1, row2, col2, node.rightBottom);
+                }
+            }
+        }
+    }
+}
+
+class TreeNode {
+    TreeNode leftTop;
+    TreeNode rightTop;
+    TreeNode leftBottom;
+    TreeNode rightBottom;
+    
+    int row1;
+    int row2;
+    int col1;
+    int col2;
+    
+    TreeNode parent;
+    int val;
+}
+
+// Your NumMatrix object will be instantiated and called as such:
+// NumMatrix numMatrix = new NumMatrix(matrix);
+// numMatrix.sumRegion(0, 1, 2, 3);
+// numMatrix.update(1, 1, 10);
+// numMatrix.sumRegion(1, 2, 3, 4);
