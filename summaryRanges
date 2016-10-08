@@ -26,3 +26,33 @@ public class Solution {
         return ranges;
     }
 }
+
+//version2
+public class Solution {
+    public List<String> summaryRanges(int[] nums) {
+        List<String> ranges = new ArrayList<String>();
+        if(nums.length == 0) return ranges;
+        int start = 0;
+        int rangeStart = nums[0];
+        int end = 0;
+        int rangeEnd = nums[0];
+        while(end < nums.length) {
+            end++;
+            if(end >= nums.length || nums[start] + 1 < nums[end]) {
+                if(rangeStart == rangeEnd) {
+                    ranges.add(Integer.toString(rangeStart));
+                } else {
+                    ranges.add(Integer.toString(rangeStart)+"->"+Integer.toString(rangeEnd));
+                }
+                if(end < nums.length)
+                    rangeStart = nums[end];
+            }
+            if(end < nums.length) {
+                rangeEnd = nums[end];
+                start = end;
+            }
+        }
+        return ranges;
+    }
+}
+
