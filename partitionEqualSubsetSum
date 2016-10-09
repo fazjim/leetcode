@@ -1,0 +1,24 @@
+public class Solution {
+    public boolean canPartition(int[] nums) {
+        int total = 0;
+        for(int num : nums) {
+            total += num;
+        }
+        if(total % 2 == 1) {
+            return false;
+        } else {
+            int sumA = total / 2;
+            int n = nums.length;
+            boolean[][] dp = new boolean[sumA+1][n+1];
+            for(int i = 0; i < n; i++) {
+                dp[0][i] = true;
+            }
+            for(int i = 0; i <= sumA; i++){
+                for(int j = 1; j <= n; j++) {
+                    if(nums[j-1] <= i) dp[i][j] = dp[i][j-1] | dp[i-nums[j-1]][j-1];
+                }
+            }
+            return dp[sumA][n];
+        }
+    }
+}
