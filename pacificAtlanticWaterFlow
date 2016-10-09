@@ -1,0 +1,62 @@
+public class Solution {
+    public List<int[]> pacificAtlantic(int[][] matrix) {
+        List<int[]> results = new ArrayList<int[]>();
+        int m = matrix.length;
+        if(m == 0) return results;
+        int n = matrix[0].length;
+        char[][] flows = new char[m][n];
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                flows[i][j] = 'n';
+            }
+        }
+        
+        for(int i = 0; i < m; i++) {
+            dfs(results, matrix, i, 0, flows, 'p', m, n);
+        }
+        for(int j = 0; j < n; j++) {
+            dfs(results, matrix, 0, j, flows, 'p', m, n);
+        }
+        
+        for(int i = 0; i < m; i++) {
+            dfs(results, matrix, i, n-1, flows, 'a', m, n);
+        }
+        for(int j = 0; j < n; j++) {
+            dfs(results, matrix, m-1, j, flows, 'a', m, n);
+        }
+        
+        return results;
+    }
+    
+    public void dfs(List<int[]> results, int[][] matrix, int i, int j, char[][] flows, char color, int m, int n) {
+        if(flows[i][j] != 'n' && flows[i][j] != color) {
+            int[] coord = new int[2];
+            coord[0] = i;
+            coord[1] = j;
+            results.add(coord);
+        }
+        flows[i][j] = color;
+        //up
+        int nextI = i - 1;
+        if(nextI >= 0 && matrix[nextI][j] >= matrix[i][j] && flows[nextI][j] != color) {
+            dfs(results, matrix, nextI, j, flows, color, m, n);
+        }
+        //down
+        nextI = i + 1;
+        if(nextI < m && matrix[nextI][j] >= matrix[i][j] && flows[nextI][j] != color) {
+            dfs(results, matrix, nextI, j, flows, color, m, n);
+        }
+        
+        //left
+        int nextJ = j - 1;
+        if(nextJ >= 0 && matrix[i][nextJ] >= matrix[i][j]  && flows[i][nextJ] != color) {
+            dfs(results, matrix, i, nextJ, flows, color, m, n);
+        }
+        
+        //right
+        nextJ = j + 1;
+        if(nextJ < n && matrix[i][nextJ] >= matrix[i][j] && flows[i][nextJ] != color) {
+            dfs(results, matrix, i, nextJ, flows, color, m, n);
+        }
+    }
+}
