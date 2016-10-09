@@ -1,0 +1,30 @@
+public class Solution {
+    public String addStrings(String num1, String num2) {
+        if(num1.length() > num2.length()) {
+            return addString(num2, num1);
+        } else {
+            return addString(num1, num2);
+        }  
+    }
+    
+    public String addString(String shortStr, String longStr) {
+        int offSet = 0;
+        int shortEnd = shortStr.length() - 1;
+        int longEnd = longStr.length() - 1;
+        StringBuilder sb = new StringBuilder();
+        while(shortEnd >= 0 || longEnd >= 0) {
+            int digitShort = 0;
+            if(shortEnd >= 0)
+                digitShort = (int) (shortStr.charAt(shortEnd) - '0');
+            int digitLong = (int) (longStr.charAt(longEnd) - '0');
+            int sum = digitShort + digitLong + offSet;
+            offSet = sum / 10;
+            char c = (char) ('0' + (sum % 10));
+            sb.insert(0, c);
+            shortEnd--;
+            longEnd--;
+        }
+        if(offSet > 0) sb.insert(0, (char)('0' + offSet));
+        return sb.toString();
+    }
+}
