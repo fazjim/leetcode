@@ -20,3 +20,42 @@ public class Solution {
         return trappedWater;
     }
 }
+//Recursive solution from Discuss
+public class Solution {
+    public int trap(int[] height) {
+        return trap(height, 0, height.length - 1);
+    }
+
+    public int trap(int[] height, int start, int end) {
+        if(Math.abs(start - end) <= 1) { return 0; }
+        int tallest = -1;
+        int secondTall = -1;
+        int idxTallest = -1;
+        int idxSecondTall = -1;
+        
+        // find the index of the tallest
+        for(int i = start; i <= end; i++) {
+            if(height[i] > tallest) {
+                tallest = height[i];
+                idxTallest = i;
+            }
+        }
+        //find the index of the 2nd tallest
+        for(int i = start; i <= end; i++) {
+            if(i != idxTallest && height[i] > secondTall){
+                secondTall = height[i];
+                idxSecondTall = i;
+            }
+        }
+        
+        //calc how much rain could we trap between tallest and 2nd tallest.
+        int minIdx = Math.min(idxTallest, idxSecondTall);
+        int maxIdx = Math.max(idxTallest, idxSecondTall);
+        int trapped = secondTall * (Math.abs(idxTallest - idxSecondTall) -1);
+        for(int i = minIdx + 1; i < maxIdx; i++){
+            trapped -= height[i];
+        }
+        
+        return trapped + trap(height, start, minIdx) + trap(height, maxIdx, end);
+    }
+}
