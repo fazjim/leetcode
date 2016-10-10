@@ -1,0 +1,22 @@
+
+
+public class Solution {
+    public int trap(int[] height) {
+        ArrayDeque<Integer> stack = new ArrayDeque<Integer>();
+        int trappedWater = 0;
+        int i = 0;
+        while(i < height.length) {
+            int h = height[i];
+            if(stack.size() == 0 || h <= height[stack.peek()]) {
+                stack.push(i);
+                i++;
+            } else {
+                int last = height[stack.pop()];
+                if(stack.size() > 0) {
+                    trappedWater += (Math.min(height[stack.peek()], h) - last) * (i - stack.peek() - 1);
+                }
+            }
+        }
+        return trappedWater;
+    }
+}
