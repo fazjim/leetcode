@@ -1,0 +1,53 @@
+public class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        List<int[]> result = new ArrayList<int[]>();
+        PriorityQueue<BuildingEnd> queue = new PriorityQueue<BuildingEnd>();
+        int curX = 0;
+        int index = 0;
+        int curHeight = 0;
+        while(index < buildings.length || queue.size() > 0) {
+            if(index < buildings.length && (queue.size() == 0 || queue.peek().end >= buildings[index][0])) {
+                curX = buildings[index][0];
+                while(index < buildings.length && buildings[index][0] == curX) {
+                    BuildingEnd newEnd = new BuildingEnd(buildings[index][1], buildings[index][2]);
+                    queue.offer(newEnd);
+                    index++;
+                }
+            } else {
+                curX = queue.poll().end;
+                while(queue.size() > 0 && queue.peek().end <= curX) {
+                    queue.poll();
+                }
+            }
+            
+            if(queue.size() == 0) curHeight = 0;
+            else curHeight = queue.peek().height;
+            
+            if(result.size() == 0 || result.get(result.size()-1)[1] != curHeight) {
+                int[] newResult = new int[2];
+                newResult[0] = curX;
+                newResult[1] = curHeight;
+                result.add(newResult);
+            }
+        }
+        return result;
+    }
+}
+
+class BuildingEnd implements Comparable<BuildingEnd> {
+    int end;
+    int height;
+    
+    BuildingEnd(int end, int height) {
+        this.end = end;
+        this.height = height;
+    }
+    
+    public int compareTo(BuildingEnd b) {
+        if(this.height != b.height) {
+            return b.height - this.height;
+        } else {
+            return this.end - b.end;
+        }
+    }
+}
