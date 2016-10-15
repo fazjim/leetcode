@@ -1,0 +1,29 @@
+public class Solution {
+    public int thirdMax(int[] nums) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+        HashSet<Integer> used = new HashSet<Integer>();
+        for(int num: nums) {
+            if(!used.contains(num)) {
+                used.add(num);
+                if(minHeap.size() < 3) {
+                    minHeap.offer(num);
+                } else {
+                    if(minHeap.peek() < num) {
+                        minHeap.poll();
+                        minHeap.offer(num);
+                    }
+                }
+            }
+        }
+        
+        if(minHeap.size() >= 3) {
+            return minHeap.poll();
+        } else {
+            int max = 0;
+            while(minHeap.size() > 0) {
+                max = minHeap.poll();
+            }
+            return max;
+        }
+    }
+}
