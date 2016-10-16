@@ -1,0 +1,101 @@
+public class Solution {
+    public String originalDigits(String s) {
+        String[] digits = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        HashMap<Integer, int[]> charArrayMapping = new HashMap<Integer, int[]>();
+        HashMap<Integer, HashSet<Integer>> options = new HashMap<Integer, HashSet<Integer>>();
+        for(int i = 0; i < digits.length; i++) {
+            String digit = digits[i];
+            charArrayMapping.put(i, getCharArray(digit));
+            for(int j = 0; j < digit.length(); j++) {
+                char c = digit.charAt(j);
+                int index = c - 'a';
+                if(options.get(index) == null) options.put(index, new HashSet<Integer>());
+                options.get(index).add(i);
+            }
+        }
+        
+        int[] charArray = getCharArray(s);
+        List<Integer> currentResult = new ArrayList<Integer>();
+        
+        int[] orders = {0, 2, 4, 6, 8, 5, 7, 9, 3, 1};
+        char[] checkOrders = {'z', 'w', 'u', 'x', 'g', 'f', 'v', 'i', 't', 'o'};
+        /*
+        for(int i = 0; i < charArray.length; i++) {
+            HashSet<Integer> option = options.get(i);
+            if(option != null && option.size() == 1) {
+                for(Integer num: option) {
+                    int count = charArray[i];
+                    for(int j = 0; j < count; j++) {
+                        currentResult.add(num);
+                    }
+                    minusArray(charArray, charArrayMapping.get(num), count, true);
+                }
+            }
+        }
+        
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        dfs(results, currentResult, charArrayMapping, charArray);
+        
+        List<Integer> result0 = results.get(0);
+        Collections.sort(result0);*/
+        for(int i = 0; i < checkOrders.length; i++) {
+            char c = checkOrders[i];
+            int index = c - 'a';
+            int count = charArray[index];
+            for(int j = 0; j < count; j++) {
+                currentResult.add(orders[i]);
+            }
+            minusArray(charArray, charArrayMapping.get(orders[i]), count, true);
+        }
+        
+        Collections.sort(currentResult);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < currentResult.size(); i++) {
+            sb.append(currentResult.get(i));
+        }
+        return sb.toString();
+    }
+    
+    public int[] getCharArray(String s) {
+        int[] charArray = new int[26];
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int index = c - 'a';
+            charArray[index]++;
+        }
+        return charArray;
+    }
+    
+    public void minusArray(int[] array1, int[] array2, int counts, boolean minus) {
+        for(int i = 0; i < array1.length; i++) {
+            if(minus)
+                array1[i] = array1[i] - array2[i] * counts;
+            else 
+                array1[i] = array1[i] + array2[i] * counts;
+        }
+    }
+    
+    
+    public void dfs(List<List<Integer>> results, List<Integer> currentResult, HashMap<Integer, int[]> charArrays, int[] charArray) {
+        boolean isEmpty = true;
+        for(int i = 0; i < 26; i++) {
+            if(charArray[i] < 0) return;
+            if(charArray[i] > 0) isEmpty = false;
+        }
+        if(isEmpty == true) {
+            results.add(new ArrayList(currentResult));
+            return;
+        }
+        
+        int[] options = {1,3,5, 7, 9};
+        for(int i: options) {
+            currentResult.add(i);
+            int[] toRemove = charArrays.get(i);
+            minusArray(charArray, toRemove, 1, true);
+            dfs(results, currentResult, charArrays, charArray);
+            if(results.size() > 0) return;
+            currentResult.remove(currentResult.size() - 1);
+            minusArray(charArray, toRemove, 1, false);
+        }
+    }
+}
