@@ -1,0 +1,32 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(10, new Comparator<ListNode>() {
+            public int compare(ListNode node1, ListNode node2) {
+                return node1.val - node2.val;
+            }
+        });
+        for(ListNode node: lists) {
+            if(node != null)
+                pq.offer(node);
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        while(pq.size() > 0) {
+            ListNode tmp = pq.poll();
+            if(tmp.next != null) {
+                pq.offer(tmp.next);
+            }
+            tail.next = tmp;
+            tail = tail.next;
+        }
+        return dummy.next;
+    }
+}
