@@ -1,0 +1,76 @@
+public class Solution {
+    public int wordsTyping(String[] sentence, int rows, int cols) {
+        HashMap<Integer, Integer> lineCountMap = new HashMap<Integer, Integer>();
+        int sentenceCount = 0;
+        int wordIndex = 0;
+        int colIndex = 0;
+        int rowNo = 0;
+        boolean hasRepeat = false;
+        int repeatRows = 0;
+        int sentenceLength = 0;
+        for(String word: sentence) sentenceLength += (word.length() + 1);
+        
+        while(rowNo < rows && wordIndex < sentence.length) {
+            if(wordIndex == 0) {
+                int spaceNum = cols - colIndex;
+                sentenceCount += spaceNum / sentenceLength;
+                colIndex += (spaceNum / sentenceLength) * sentenceLength;
+            }
+            String word = sentence[wordIndex];
+            if(colIndex + word.length() <= cols) {
+                colIndex += word.length();
+                wordIndex++;
+                colIndex += 1;
+            } else {
+                lineCountMap.put(rowNo, sentenceCount);
+                rowNo++;
+                colIndex = word.length();
+                if(colIndex > cols) return 0;
+                colIndex += 1;
+                wordIndex++;
+            }
+                
+            if(wordIndex == sentence.length) {
+                sentenceCount++;
+                lineCountMap.put(rowNo, sentenceCount);
+                wordIndex = 0;
+                if(colIndex + sentence[wordIndex].length() > cols) {
+                    hasRepeat = true;
+                }
+            }
+            
+            if(hasRepeat) {
+                repeatRows = rowNo + 1;
+                break;
+            }
+        }
+        if(!hasRepeat) return lineCountMap.get(rows-1);
+        else {
+            int times = rows / repeatRows;
+            int rest = rows % repeatRows;
+            int restSentNum = 0;
+            if(rest != 0) restSentNum = lineCountMap.get(rest-1);
+            return times*lineCountMap.get(rowNo) + restSentNum;
+        }
+    }
+}
+
+//from Online Discuss
+public class Solution {
+    public int wordsTyping(String[] sentence, int rows, int cols) {
+        String s = String.join(" ", sentence) + " ";
+        int start = 0, l = s.length();
+        for (int i = 0; i < rows; i++) {
+            start += cols;
+            if (s.charAt(start % l) == ' ') {
+                start++;
+            } else {
+                while (start > 0 && s.charAt((start-1) % l) != ' ') {
+                    start--;
+                }
+            }
+        }
+        
+        return start / s.length();
+    }
+}
