@@ -48,3 +48,4 @@ Binary Indexed Tree
 41. Use ArrayDeque instead of using Stack (which is deprecated because it inherited Vector).  Use StringBuilder for mutable String. StringBuffer is synchronized like Hashtable
 42. backpack problems of select numbers that sum == i, dp[i][j], i is the value itself, j is the index of the pack, thus dp[i][j] = dp[i][j-1] | dp[i-nums[j-1]][j-1]
 43. Always pay attention whether the characters can be lowercase or more than lowercase (Vowel)
+44. Double ended queue: Deque
