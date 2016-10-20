@@ -1,0 +1,68 @@
+public class Solution {
+    public void wiggleSort(int[] nums) {
+        if(nums.length <= 1) return;
+        int medianIndex = partition(nums, (nums.length + 1)/2, 0, nums.length - 1);
+        int median = nums[medianIndex];
+        int big = 1;
+        int small = nums.length - 1;
+        if(nums.length % 2 == 0) small = nums.length - 2;
+        for(int i = small; i>= 0; i-=2) {
+            if(nums[i] > median) {
+                swap(nums, i, big);
+                big += 2;
+                i+=2;
+            } else if(nums[i] < median) {
+                swap(nums, i , small);
+                small -= 2;
+            }
+        }
+        
+        for(int i = big; i < nums.length; i+=2) {
+            if(nums[i] > median) {
+                swap(nums, i, big);
+                big += 2;
+            } else if(nums[i] < median) {
+                swap(nums, i, small);
+                small -= 2;
+                i-=2;
+            }
+        }
+    }
+    
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    public int partition(int[] nums, int k, int begin, int end) {
+        int pivot = nums[end];
+        int small = begin;
+        for(int i = begin; i < end; i++) {
+            if(nums[i] < pivot) {
+                swap(nums, i, small);
+                small++;
+            } 
+        }
+        swap(nums, end, small);
+        int len = small - begin + 1;
+        if(len == k) {
+            return small;
+        } else if(len > k) {
+            return partition(nums, k, begin, small - 1);
+        } else {
+            return partition(nums, k - len, small + 1, end);
+        }
+    }
+}
+
+//Another solution from Discuss
+public class Solution {
+    public void wiggleSort(int[] nums) {
+        for (int i = 1; i < nums.length; i++)
+            if ((i % 2 == 1 && nums[i] < nums[i - 1]) || (i % 2 == 0 && nums[i] > nums[i - 1])) {
+                int tmp = nums[i];
+                nums[i] = nums[i - 1];
+                nums[i - 1] = tmp;
+            }
+    }
+}
