@@ -32,3 +32,34 @@ public class Solution {
         root = dummy.right;
     }
 }
+
+//recursive
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void flatten(TreeNode root) {
+        if(root == null) return;
+        TreeNode right = root.right;
+        root.right = null;
+        if(root.left != null) {
+            root.right = root.left;
+            root.left = null;
+            flatten(root.right);
+        } 
+        if(right != null) {
+            TreeNode toRight = root;
+            while(toRight.right != null) {
+                toRight = toRight.right;
+            }
+            toRight.right = right;
+            flatten(right);
+        }
+    }
+}
