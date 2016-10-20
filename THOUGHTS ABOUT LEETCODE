@@ -51,3 +51,4 @@ Binary Indexed Tree
 44. Double ended queue: Deque
 45. store index into the queue for cases when you want a window of k 
 46. for finding consecutive solutions, for loop, find index,  if([index] == [index-1]) continue;
+47. WordWrap: Minimum number of lines (Greedy, keep putting until ends), minimum raggedness (dp)
