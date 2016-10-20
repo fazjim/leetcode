@@ -1,0 +1,47 @@
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> wordDict) {
+        List<List<Integer>> dp = new ArrayList<List<Integer>>();
+        int sLength = s.length();
+        for(int i = 0; i <= sLength; i++) {
+            dp.add(new ArrayList<Integer>());
+        }
+        dp.get(0).add(0);
+        
+        for(int i = 0; i < sLength + 1; i++) {
+            for(int j = 0; j < i; j++) {
+                String word = s.substring(j, i);
+                if(dp.get(j).size() > 0 && wordDict.contains(word)) {
+                    dp.get(i).add(j);
+                }
+            }
+        }
+        
+        List<String> result = new ArrayList<String>();
+        if(dp.get(sLength).size() == 0) return result;
+        StringBuilder builder = new StringBuilder();
+        dfs(result, builder, sLength, dp, s);
+        return result;
+    }
+    
+    public void dfs(List<String> result, StringBuilder builder, int index, List<List<Integer>> dp, String str) {
+        if(index == 0)  {
+            result.add(builder.toString());
+            return;
+        }
+        List<Integer> options = dp.get(index);
+        for(int option: options) {
+            String word = str.substring(option, index);
+            if(index == str.length()) {
+                builder.insert(0, word);
+            } else {
+                builder.insert(0, word + " ");
+            }
+            dfs(result, builder, option, dp, str);
+            if(index == str.length()) {
+                builder.delete(0, word.length());
+            } else {
+                builder.delete(0, word.length() + 1);
+            }
+        }
+    }
+}
