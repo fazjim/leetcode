@@ -49,4 +49,4 @@ Binary Indexed Tree
 42. backpack problems of select numbers that sum == i, dp[i][j], i is the value itself, j is the index of the pack, thus dp[i][j] = dp[i][j-1] | dp[i-nums[j-1]][j-1]
 43. Always pay attention whether the characters can be lowercase or more than lowercase (Vowel)
 44. Double ended queue: Deque
-45. store index into the queue for cases when you want a timeout of k 
+45. store index into the queue for cases when you want a window of k 
