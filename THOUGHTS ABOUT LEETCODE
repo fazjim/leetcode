@@ -50,3 +50,4 @@ Binary Indexed Tree
 43. Always pay attention whether the characters can be lowercase or more than lowercase (Vowel)
 44. Double ended queue: Deque
 45. store index into the queue for cases when you want a window of k 
+46. for finding consecutive solutions, for loop, find index,  if([index] == [index-1]) continue;
