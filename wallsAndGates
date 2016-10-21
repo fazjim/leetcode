@@ -1,0 +1,51 @@
+public class Solution {
+    public void wallsAndGates(int[][] rooms) {
+        if(rooms.length == 0) return;
+        for(int i = 0; i < rooms.length; i++) {
+            for(int j = 0; j < rooms[0].length; j++) {
+                if(rooms[i][j] == 0) bfs(rooms, i, j);
+            }
+        }
+    }
+    
+    public void bfs(int[][] rooms, int i, int j) {
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.offer(new Node(i, j));
+        int dist = 0;
+        while(queue.size()> 0) {
+            int size = queue.size();
+            dist++;
+            for(int k = 0; k < size; k++) {
+                Node node = queue.poll();
+                int x = node.i;
+                int y = node.j;
+                if(x > 0 && dist < rooms[x-1][y]) {
+                    rooms[x-1][y] = dist;
+                    queue.offer(new Node(x-1, y));
+                }
+                if(y > 0 && dist < rooms[x][y-1] ) {
+                    rooms[x][y-1] = dist;
+                    queue.offer(new Node(x, y-1));
+                }
+                if(x < rooms.length - 1 && dist < rooms[x+1][y]) {
+                    rooms[x+1][y] = dist;
+                    queue.offer(new Node(x+1, y));
+                }
+                if(y < rooms[0].length - 1 && dist < rooms[x][y+1]) {
+                    rooms[x][y+1] = dist;
+                    queue.offer(new Node(x, y+1));
+                }
+            }
+        }
+    }
+    
+}
+
+class Node {
+    int i; 
+    int j;
+    Node(int i, int j) {
+        this.i = i;
+        this.j = j;
+    }
+}
