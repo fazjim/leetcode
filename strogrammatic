@@ -1,0 +1,24 @@
+public class Solution {
+    public boolean isStrobogrammatic(String num) {
+        int start = 0;
+        int end = num.length() - 1;
+        while(start <= end) {
+            if(start == end && (num.charAt(start) == '6' || num.charAt(end) == '9')) return false;
+            if(isStrbogram(num.charAt(start), num.charAt(end))) {
+                start++;
+                end--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isStrbogram(char c1, char c2) {
+        if(c1 == '1' && c2 == '1') return true;
+        else if((c1 == '6' && c2 == '9') || (c1 == '9' && c2 == '6')) return true;
+        else if(c1 == '8' && c2 == '8') return true;
+        else if(c1 == '0' && c2 == '0') return true;
+        return false;
+    }
+}
