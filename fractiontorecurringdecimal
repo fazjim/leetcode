@@ -37,3 +37,35 @@ public class Solution {
         }
     }
 }
+
+//V2
+public class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+        StringBuffer sb = new StringBuffer();
+        if( (numerator < 0 && denominator > 0) || (numerator > 0 && denominator < 0)) sb.append("-");
+        long n  = Math.abs((long)numerator);
+        long m = Math.abs((long)denominator);
+        long divide = n / m;
+        n = (n % m) * 10;
+        
+        sb.append(divide);
+        if(n == 0) {
+            return sb.toString();
+        } else {
+            sb.append(".");
+            int index = sb.length();
+            HashMap<Long, Integer> repeatIndex = new HashMap<Long, Integer>();
+            while(!repeatIndex.containsKey(n) && n != 0) {
+                repeatIndex.put(n, index);
+                sb.append(n / m);
+                n = (n % m) * 10;
+                index++;
+            }
+            if(n == 0) return sb.toString();
+            int insertIndex = repeatIndex.get(n);
+            sb.insert(insertIndex, "(");
+            sb.append(")");
+            return sb.toString();
+        }
+    }
+}
