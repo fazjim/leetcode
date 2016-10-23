@@ -1,0 +1,38 @@
+//Wait and see if correct or not
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        int[] map = new int[26];
+        for(int i = 0; i < p.length(); i++) {
+            char c = p.charAt(i);
+            int index = c - 'a';
+            map[index] ++;
+        }
+        
+        int start = 0;
+        int end = 1;
+        int[] realmap = new int[26];
+        List<Integer> results = new ArrayList<Integer>();
+        while(start < s.length()) {
+            int newIndex = s.charAt(start) - 'a';
+            realmap[newIndex]++;
+            while(end < s.length()) {
+                int endIndex = s.charAt(end) - 'a';
+                if(realmap[endIndex] + 1 > map[endIndex]) {
+                    break;
+                }
+                end++;
+            }
+            if(isMatched(map, realmap)) results.add(start); 
+            realmap[newIndex]--;
+            start++;
+        }
+        return results;
+    }
+    
+    public boolean isMatched(int[] map, int[] realMap) {
+        for(int i = 0; i < 26; i++) {
+            if(map[i] != realmap[i]) return false;
+        }
+        return true;
+    }
+}
