@@ -1,0 +1,72 @@
+public class Solution {
+    public int shortestDistance(int[][] grid) {
+        int m = grid.length;
+        if(m == 0) return 0;
+        int n = grid[0].length;
+        int[][] allDistance = new int[m][n];
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(grid[i][j] == 1) {
+                    boolean[][] visited = new boolean[m][n];
+                    int[][] distances = new int[m][n];
+                    bfs(distances, grid, visited, i, j);
+                    for(int ii = 0; ii < m; ii++) {
+                        for(int jj = 0; jj < n; jj++) {
+                            if(distances[ii][jj] == 0) {
+                                allDistance[ii][jj] = Integer.MIN_VALUE;
+                            } else {
+                                if(allDistance[ii][jj] != Integer.MIN_VALUE)
+                                    allDistance[ii][jj] += distances[ii][jj];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        int minDist = Integer.MAX_VALUE;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(allDistance[i][j] > 0)
+                    minDist = Math.min(minDist, allDistance[i][j]);
+            }
+        }
+        if(minDist == Integer.MAX_VALUE) minDist = -1;
+        return minDist;
+    }
+    
+    public void bfs(int[][] distances, int[][] grid, boolean[][] visited, int x1, int y1) {
+        visited[x1][y1] = true;
+        Queue<int[]> queue = new LinkedList<int[]>();
+        queue.offer(new int[]{x1,y1});
+        int dist = 0;
+        while(queue.size() > 0) {
+            int size = queue.size();
+            dist++;
+            for(int i = 0; i < size; i++) {
+                int[] point = queue.poll();
+                int x = point[0];
+                int y = point[1];
+                if(x > 0 && grid[x-1][y] == 0 && !visited[x-1][y]) {
+                    distances[x-1][y] = dist;
+                    queue.offer(new int[]{x-1,y});
+                    visited[x-1][y] = true;
+                }
+                if(x < grid.length - 1 && grid[x+1][y] == 0 && !visited[x+1][y]) {
+                    distances[x+1][y] = dist;
+                    queue.offer(new int[]{x+1, y});
+                    visited[x+1][y] = true;
+                }
+                if(y > 0 && grid[x][y-1] == 0 && !visited[x][y-1]) {
+                    distances[x][y-1] = dist;
+                    queue.offer(new int[]{x, y-1});
+                    visited[x][y-1] = true;
+                }
+                if(y < grid[0].length - 1 && grid[x][y+1] == 0 && !visited[x][y+1]) {
+                    distances[x][y+1] = dist;
+                    queue.offer(new int[]{x,y+1});
+                    visited[x][y+1] = true;
+                }
+            }
+        }
+    }
+}
