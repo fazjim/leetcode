@@ -1,0 +1,72 @@
+public class Solution {
+    public String alienOrder(String[] words) {
+        if(words.length == 0) return "";
+        if(words.length == 1) return words[0];
+        int[][] relations = new int[26][26];
+        int[] inDegree = new int[26];
+        String leadWord = words[0];
+        HashSet<Character> allChars = new HashSet<Character>();
+        for(int i = 1; i < words.length; i++) {
+            leadWord = words[i-1];
+            String nextWord = words[i];
+            int indexI = 0;
+            int indexJ = 0;
+            boolean foundDiff = false;
+            while(indexI < leadWord.length() || indexJ < nextWord.length()) {
+                if(indexI < leadWord.length() && indexJ < nextWord.length()) {
+                    char c1 = leadWord.charAt(indexI);
+                    char c2 = nextWord.charAt(indexJ);
+                    if(c1 == c2) {
+                        allChars.add(c1);
+                    } else {
+                        allChars.add(c1);
+                        allChars.add(c2);
+                        if(!foundDiff) {
+                            if(relations[c1-'a'][c2-'a'] == 0) {
+                                relations[c1-'a'][c2-'a'] = 1;
+                                inDegree[c2-'a']++;
+                            }
+                            foundDiff = true;
+                        }
+                    }
+                    indexI++;
+                    indexJ++;
+                } else {
+                    if(indexI < leadWord.length()) {
+                        if(foundDiff == false) return "";
+                        allChars.add(leadWord.charAt(indexI));
+                        indexI++;
+                    } else if(indexJ < nextWord.length()) {
+                        allChars.add(nextWord.charAt(indexJ));
+                        indexJ++;
+                    }
+                }
+            }
+        }
+        
+        Queue<Character> queue = new LinkedList<Character>();
+        for(char c: allChars) {
+            if(inDegree[c-'a'] == 0) {
+                queue.offer(c);
+            }
+        }
+        
+        StringBuilder builder = new StringBuilder();
+        while(queue.size() > 0) {
+            char c = queue.poll();
+            builder.append(c);
+            
+            for(int j = 0; j < 26; j++) {
+                if(relations[c-'a'][j] == 1) {
+                    inDegree[j]--;
+                    if(inDegree[j] == 0) {
+                        queue.offer((char)('a'+j));
+                    }
+                    if(inDegree[j] < 0) return "";
+                }
+            }
+        }
+        if(builder.length() != allChars.size()) return "";
+        return builder.toString();
+    }
+}
