@@ -1,0 +1,40 @@
+public class Solution {
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        int[] root = new int[m*n];
+        Arrays.fill(root, -1);
+        int count = 0;
+        List<Integer> counts = new ArrayList<Integer>();
+        for(int i = 0; i < positions.length; i++) {
+            int[] island = positions[i];
+            int x = island[0];
+            int y = island[1];
+            int index = x * n  + y;
+            root[index] = index;
+            count++;
+            
+            int[][] directions = {{0,-1}, {0, 1}, {1, 0}, {-1, 0}};
+            for(int[] direction: directions) {
+                int newX = x + direction[0];
+                int newY = y + direction[1];
+                if(newX >= 0 && newX < m && newY >= 0 && newY < n && root[newX*n + newY] > -1) {
+                    int root2 = findRoot(root, newX*n + newY);
+                    if(root2 != index) {
+                        root[index] = root2;
+                        index = root2; 
+                        count--;
+                    }
+                }
+            }
+            counts.add(count);
+        }
+        return counts;
+    }
+    
+    public int findRoot(int[] root, int index) {
+        while(root[index] != index) {
+            root[index] = root[root[index]];
+            index = root[index];
+        }
+        return index;
+    }
+}
