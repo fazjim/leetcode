@@ -1,0 +1,29 @@
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> results = new ArrayList<String>();
+        StringBuilder builder = new StringBuilder();
+        helper(results, builder, 0, 0, n);
+        return results;
+    }
+    
+    public void helper(List<String> results, StringBuilder currentResult, int numLeft, int numRight, int n) {
+        if(numLeft == n && numRight == n) {
+            results.add(currentResult.toString());
+            return;
+        }
+        if(numLeft > n || numRight > n) return;
+        
+        if(numLeft > numRight) {
+            currentResult.append("(");
+            helper(results, currentResult, numLeft + 1, numRight, n);
+            currentResult.deleteCharAt(currentResult.length()-1);
+            currentResult.append(")");
+            helper(results, currentResult, numLeft, numRight+1, n);
+            currentResult.deleteCharAt(currentResult.length()-1);
+        } else {
+            currentResult.append("(");
+            helper(results, currentResult, numLeft + 1, numRight, n);
+            currentResult.deleteCharAt(currentResult.length()-1);
+        }
+    }
+}
