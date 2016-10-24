@@ -1,0 +1,64 @@
+public class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+        BSTTree tree = new BSTTree();
+        List<Integer> list = new ArrayList<Integer>();
+        for(int i = nums.length - 1; i>=0; i--) {
+            list.add(tree.insertTreeNode(nums[i]));
+        }
+        Collections.reverse(list);
+        return list;
+    }
+}
+
+class BSTTreeNode {
+    int val;
+    int count;
+    int leftCount = 0;
+    BSTTreeNode(int val) {
+        this.val = val;
+        this.count = 1;
+    }
+    BSTTreeNode left;
+    BSTTreeNode right;
+}
+
+class BSTTree {
+    BSTTreeNode root;
+    
+    public BSTTree() {
+        root = null;
+    }
+    
+    int insertTreeNode(int val) {
+        if(root == null) {
+            root = new BSTTreeNode(val);
+            return 0;
+        } else {
+            return insertHelper(root, val);
+        }
+    }
+    
+    int insertHelper(BSTTreeNode root, int val) {
+        if(root.val == val) {
+            root.count += 1;
+            return root.leftCount;
+        } else if(val < root.val) {
+            root.leftCount += 1;
+            if(root.left != null) {
+                return insertHelper(root.left, val);
+            } else {
+                BSTTreeNode left = new BSTTreeNode(val);
+                root.left = left;
+                return 0;
+            }
+        } else {
+            if(root.right != null) {
+                return root.leftCount + root.count + insertHelper(root.right, val);
+            } else {
+                BSTTreeNode right = new BSTTreeNode(val);
+                root.right = right;
+                return root.leftCount + root.count;
+            }
+        }
+    }
+}
