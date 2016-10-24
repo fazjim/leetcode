@@ -26,3 +26,42 @@ public class Solution {
         return val;
     }
 }
+
+//revisit
+
+public class Solution {
+    public int maxProduct(String[] words) {
+        HashMap<Integer, Integer> maskTable = new HashMap<Integer, Integer>();
+        int maxLength = 0;
+        for(int i = words.length-1; i>=0; i--) {
+            int maskI = 0;
+            if(maskTable.containsKey(i)) {
+                maskI = maskTable.get(i);
+            } else {
+                maskI = encode(words[i]);
+                maskTable.put(i, maskI);
+            }
+            for(int j = i - 1; j >= 0; j--) {
+                int maskJ = 0;
+                if(maskTable.containsKey(j)) {
+                    maskJ = maskTable.get(j);
+                } else {
+                    maskJ = encode(words[j]);
+                    maskTable.put(j, maskJ);
+                } 
+                if((maskI & maskJ) == 0) maxLength = Math.max(maxLength, words[i].length() * words[j].length());
+            }
+
+        }
+        return maxLength;
+    }
+    
+    public int encode(String word) {
+        int mask = 0;
+        for(int i = 0; i < word.length(); i++) {
+            int index = word.charAt(i) - 'a';
+            mask = mask | (1 << index);
+        }
+        return mask;
+    }
+}
