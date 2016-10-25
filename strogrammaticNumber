@@ -1,0 +1,23 @@
+public class Solution {
+    public List<String> findStrobogrammatic(int n) {
+        char[][] pairs = {{'0', '0'}, {'1', '1'}, {'6','9'}, {'9','6'},{'8','8'}};
+        List<String> result = new ArrayList<String>();
+        char[] currentChars = new char[n];
+        helper(result, currentChars, 0, n-1, pairs);
+        return result;
+    }
+    
+    public void helper(List<String> result, char[] currentChars, int left, int right, char[][] pairs) {
+        if(left > right) {
+            result.add(new String(currentChars));
+        } else {
+            for(char[] pair: pairs) {
+                if(left == 0 && currentChars.length > 1 && pair[0] == '0') continue;
+                if(left == right && (pair[0] == '6'|| pair[0] ==  '9')) continue;
+                currentChars[left] = pair[0];
+                currentChars[right] = pair[1];
+                helper(result, currentChars, left + 1, right - 1, pairs);
+            }
+        }
+    }
+}
