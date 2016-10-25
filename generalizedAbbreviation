@@ -1,0 +1,27 @@
+public class Solution {
+    public List<String> generateAbbreviations(String word) {
+        List<String> results = new ArrayList<String>();
+        StringBuilder currStr = new StringBuilder();
+        helper(results, 0, currStr, 0, word);
+        return results;
+    }
+    
+    public void helper(List<String> results, int index, StringBuilder currStr, int num, String s) {
+        if(index == s.length()) {
+            int length = currStr.length();
+            if(num > 0) currStr.append(Integer.toString(num));
+            results.add(currStr.toString());
+            currStr.setLength(length);
+        } else {
+            helper(results, index+1, currStr, num+1, s);
+            
+            int length = currStr.length(); 
+            if(num > 0) currStr.append(Integer.toString(num));
+            currStr.append(s.charAt(index));
+            helper(results, index+1, currStr, 0, s);
+            currStr.setLength(length);
+            
+           
+        }
+    }
+}
