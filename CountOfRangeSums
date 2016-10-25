@@ -1,0 +1,27 @@
+public class Solution {
+    public int countRangeSum(int[] nums, int lower, int upper) {
+        if(nums.length == 0) return 0;
+        int[] sums = new int[nums.length];
+        
+        TreeMap<Long, Long> counts = new TreeMap<Long, Long>();
+        long sum = 0;
+        long count = 0;
+        counts.put((long)0, (long)1);
+        for(int num: nums) {
+            sum += num;
+            long from = sum - upper;
+            long to = sum - lower;
+            Map<Long, Long> subMap = counts.subMap(from, true, to, true);
+            for(Long value: subMap.values()) {
+                count += value;
+            }
+            if(counts.containsKey(sum)) {
+                counts.put(sum, counts.get(sum) + 1);
+            } else {
+                counts.put(sum, (long)1);
+            }
+        }
+        return (int)count;
+    }
+}
+
