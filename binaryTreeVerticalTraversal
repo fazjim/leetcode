@@ -1,0 +1,51 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        TreeMap<Integer, List<Node>> resultMap = new TreeMap<Integer, List<Node>>();
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        helper(resultMap, root, 0, 0);
+        Iterator<Integer> it = resultMap.keySet().iterator();
+        while(it.hasNext()) {
+            List<Node> col = resultMap.get(it.next());
+            List<Integer> vals = new ArrayList<Integer>();
+            Collections.sort(col);
+            for(Node node: col) {
+                vals.add(node.val);
+            }
+            results.add(vals);
+        }
+        return results;
+    }
+    
+    public void helper(TreeMap<Integer, List<Node>> map, TreeNode root, int index, int height) {
+        if(root != null) {
+        helper(map, root.left, index-1, height + 1);
+        if(!map.containsKey(index)) {
+            map.put(index, new ArrayList<Node>());
+        }
+        map.get(index).add(new Node(root.val,height));
+        helper(map,root.right, index+1, height + 1);
+        }
+    }
+    
+    class Node implements Comparable<Node> {
+        int val;
+        int height;
+        
+        Node(int val, int height) {
+            this.val = val;
+            this.height = height;
+        }
+        public int compareTo(Node n1) {
+            return this.height - n1.height;
+        }
+    }
+}
