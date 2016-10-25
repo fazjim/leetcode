@@ -1,0 +1,33 @@
+public class Solution {
+    public List<List<String>> groupStrings(String[] strings) {
+        List<List<String>> results = new ArrayList<List<String>>();
+        HashMap<String, List<String>> groups = new HashMap<String, List<String>>();
+        for(String str: strings) {
+            String key = toFirst(str);
+            if(!groups.containsKey(key)) {
+                groups.put(key, new ArrayList<String>());
+            }
+            groups.get(key).add(str);
+        }
+        Iterator<String> it = groups.keySet().iterator();
+        while(it.hasNext()) {
+            results.add(groups.get(it.next()));
+        }
+        return results;
+    }
+    
+    public String toFirst(String str) {
+        char firstChar = str.charAt(0);
+        int dist = firstChar - 'a';
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < str.length(); i++) {
+            char c =  str.charAt(i);
+            char newC = (char)(c - dist);
+            if(newC < 'a') {
+                newC = (char)(newC + 26);
+            }
+            sb.append(newC);
+        }
+        return sb.toString();
+    }
+}
