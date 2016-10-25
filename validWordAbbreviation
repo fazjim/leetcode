@@ -28,3 +28,37 @@ public class Solution {
         return true;
     }
 }
+
+
+//v2
+public class Solution {
+    public boolean validWordAbbreviation(String word, String abbr) {
+        int cursor1 = 0;
+        int cursor2 = 0;
+        while(cursor1 < word.length() && cursor2 < abbr.length()) {
+            if(word.charAt(cursor1) == abbr.charAt(cursor2)) {
+                cursor1++;
+                cursor2++;
+            } else {
+                if(abbr.charAt(cursor2) < '0' || abbr.charAt(cursor2) > '9') return false;
+                if(cursor2 < abbr.length() && abbr.charAt(cursor2) == '0') {
+                    return false;
+                }
+                int num = 0;
+                if(cursor2 < abbr.length()) {
+                    char c = abbr.charAt(cursor2);
+                    while(c >= '0' && c <= '9') {
+                        num = num * 10 + (c-'0');
+                        cursor2++;
+                        if(cursor2 >= abbr.length()) break;
+                        c = abbr.charAt(cursor2);
+                    } 
+                }
+                cursor1+= num;
+            }
+        }
+        
+        if(cursor1 == word.length() && cursor2 == abbr.length()) return true;
+        return false;
+    }
+}
