@@ -1,0 +1,13 @@
+public class Solution {
+    public int arrangeCoins(int n) {
+        int sum = 1;
+        int last = 1;
+        int layer = 0;
+        while(start <= n) {
+            layer++;
+            last = last + 1;
+            start += last;
+        }
+        return layer;
+    }
+}
