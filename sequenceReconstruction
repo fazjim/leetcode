@@ -1,0 +1,60 @@
+//runtime error in leetcode
+public class Solution {
+    public boolean sequenceReconstruction(int[] org, int[][] seqs) {
+        HashMap<Integer, Integer> inDegrees = new HashMap<Integer, Integer>();
+        HashMap<Integer, HashSet<Integer>> edges = new HashMap<Integer, HashSet<Integer>>();
+        HashSet<Integer> startPoints = new HashSet<Integer>();
+        HashSet<Integer> allValues = new HashSet<Integer>();
+        
+        for(int[] seq: seqs) {
+            if(seq.length > 0) {
+                if(!inDegrees.containsKey(seq[0])) startPoints.add(seq[0]);
+                allValues.add(seq[0]);
+                for(int i = 1; i < seq.length; i++) {
+                    allValues.add(seq[i]);
+                    for(int j = 0; j < i; j++) {
+                        if(!edges.containsKey(seq[j])) {
+                            edges.put(seq[j], new HashSet<Integer>());
+                        }
+                        if(!inDegrees.containsKey(seq[i])) {
+                            inDegrees.put(seq[i], 0);
+                        }
+                        if(startPoints.contains(seq[i])) startPoints.remove(seq[i]);
+                        if(edges.containsKey(seq[i]) && edges.get(seq[i]).contains(seq[j])) {
+                            return false;
+                        } else {
+                            if(!edges.get(seq[j]).contains(seq[i])) {
+                                edges.get(seq[j]).add(seq[i]);
+                                inDegrees.put(seq[i], inDegrees.get(seq[i]) + 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if(startPoints.size() != 1) return false;
+        int count = 0;
+        while(true) {
+            if(startPoints.size() != 1) return false;
+            int startPoint = 0;
+            for(Integer sp: startPoints) {
+                startPoint = sp;
+            }
+            startPoints.remove(startPoint);
+            count++;
+            HashSet<Integer> destinations = edges.get(startPoint);
+            if(destinations == null || destinations.size() == 0) {
+                if(count < allValues.size()) return false;
+                return true;
+            }
+            for(Integer destination: destinations) {
+                if(destination == startPoint) return false;
+                if(inDegrees.get(destination) == 1) {
+                    startPoints.add(destination);
+                }
+                inDegrees.put(destination, inDegrees.get(destination) - 1);
+            }       
+        }
+    }
+}
