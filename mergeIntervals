@@ -35,3 +35,38 @@ public class Solution {
         return intervals.subList(0, index+1);
     }
 }
+
+//2nd trial
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        Collections.sort(intervals, new Comparator<Interval>() {
+            public int compare(Interval v1, Interval v2) {
+                return v1.start - v2.start;
+            } 
+        });
+        
+        List<Interval> merge = new ArrayList<Interval>();
+        if(intervals.size() == 0) return merge;
+        Interval start = intervals.get(0);
+        for(int i = 1; i < intervals.size(); i++) {
+            Interval tmp = intervals.get(i);
+            if(tmp.start > start.end) {
+                merge.add(start);
+                start = tmp;
+            } else {
+                start.end = Math.max(start.end, tmp.end);
+            }
+        }
+        merge.add(start);
+        return merge;
+    }
+}
