@@ -32,3 +32,34 @@ public class Solution {
         else return largeDepth + 1;
     }
 }
+
+
+//version 2
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(getLength(root) < 0) return false;
+        return true;
+    }
+    
+    public int getLength(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right == null) {
+            return 1;
+        } else {
+            int left = getLength(root.left);
+            int right = getLength(root.right);
+            if(left == -1 || right == -1) return -1;
+            if(left - right > 1 || left - right < -1) return -1;
+            return Math.max(left, right) + 1;
+        }
+    }
+}
