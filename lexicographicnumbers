@@ -21,3 +21,21 @@ public class Solution {
         }
     }
 }
+
+//2nd trial
+public class Solution {
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer> result = new ArrayList<Integer>();
+        if(n == 0) return result;
+        dfs(result, 1, n);
+        return result;
+    }
+    
+    public void dfs(List<Integer> result, int number, int n) {
+        if(number > n) return;
+        result.add(number);
+        dfs(result, number*10, n);
+        if((number + 1) % 10 != 0)
+            dfs(result, number+1, n);
+    }
+}
