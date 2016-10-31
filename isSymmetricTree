@@ -37,3 +37,43 @@ public class Solution {
         return true;
     }
 }
+
+
+//V2
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null) return true;
+        Queue<TreeNode> leftQueue = new LinkedList<TreeNode>();
+        Queue<TreeNode> rightQueue = new LinkedList<TreeNode>();
+        if(root.left != null) leftQueue.offer(root.left);
+        if(root.right != null) rightQueue.offer(root.right);
+        
+        while(leftQueue.size() != 0 && rightQueue.size() != 0) {
+            int lSize = leftQueue.size(); 
+            int rSize = rightQueue.size();
+            if(lSize != rSize) return false;
+            for(int i = 0; i < lSize; i++) {
+                TreeNode leftNode = leftQueue.poll();
+                TreeNode rightNode = rightQueue.poll();
+                if(leftNode == null && rightNode == null) continue;
+                if(leftNode == null || rightNode == null) return false;
+                if(leftNode.val != rightNode.val) return false;
+                leftQueue.offer(leftNode.left);
+                leftQueue.offer(leftNode.right);
+                rightQueue.offer(rightNode.right);
+                rightQueue.offer(rightNode.left);
+            }
+        }
+        if(leftQueue.size() == 0 && rightQueue.size() == 0) return true;
+        return false;
+    }
+}
