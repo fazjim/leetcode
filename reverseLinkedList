@@ -21,3 +21,26 @@ public class Solution {
         return current;
     }
 }
+
+//v2
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head == null) return null;
+        ListNode next = head.next;
+        if(next == null) return head;
+        ListNode reverseHead = reverseList(next);
+        ListNode cursor = reverseHead;
+        while(cursor.next != null) cursor = cursor.next;
+        cursor.next = head;
+        head.next = null;
+        return reverseHead;
+    }
+}
