@@ -35,3 +35,25 @@ public int hIndex(int[] citations) {
     }
     return 0;
 }
+
+
+//v2
+public class Solution {
+    public int hIndex(int[] citations) {
+        int[] bucket = new int[citations.length+1];
+        for(int citation: citations) {
+            int index = citation;
+            if(index >= citations.length) index = citations.length;
+            bucket[index]++;
+        } 
+        
+        int last = citations.length;
+        int count = 0;
+        while(last > 0) {
+            count += bucket[last];
+            if(count >= last) return last;
+            last--;
+        }
+        return last;
+    }
+}
