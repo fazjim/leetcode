@@ -72,3 +72,62 @@ public class Codec {
 // Your Codec object will be instantiated and called as such:
 // Codec codec = new Codec();
 // codec.deserialize(codec.serialize(root));
+
+//v2
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder builder = new StringBuilder();
+        strHelper(builder, root);
+        return builder.toString();
+    }
+    
+    public void strHelper(StringBuilder sb, TreeNode root) {
+        if(root == null) sb.append("null ");
+        else {
+            sb.append(root.val + " ");
+            strHelper(sb, root.left);
+            strHelper(sb, root.right);
+        }
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] tokens = data.split(" ");
+        if(tokens.length == 0) return null;
+        else {
+            int[] index = {0};
+            return buildTree(tokens, index);
+        }
+    }
+    
+    public TreeNode buildTree(String[] tokens, int[] index) {
+        if(index[0] >= tokens.length) return null;
+        if(tokens[index[0]].equals("null")) {
+            index[0]++;
+            return null;
+        } else {
+            int val = Integer.parseInt(tokens[index[0]]);
+            TreeNode n = new TreeNode(val);
+            index[0]++;
+            n.left = buildTree(tokens, index);
+            n.right = buildTree(tokens, index);
+            return n;
+        }
+        
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.deserialize(codec.serialize(root));
