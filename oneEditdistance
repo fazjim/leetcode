@@ -1,0 +1,43 @@
+public class Solution {
+    public boolean isOneEditDistance(String s, String t) {
+        if(s.length() == t.length()) {
+            return isOneEditAway(s, t);
+        } else {
+            if(s.length() < t.length()) {
+                return isOneAddAway(s, t);
+            } else {
+                return isOneAddAway(t, s);
+            }
+        }
+    }
+    
+    public boolean isOneEditAway(String s1, String s2) {
+        int i = 0;
+        int j = 0;
+        int cnt = 0;
+        while(i < s1.length()) {
+            if(s1.charAt(i) != s2.charAt(i)) {
+                if(cnt == 0) cnt = 1;
+                else return false;
+            }
+            i++;
+        }
+        if(cnt == 0) return false;
+        return true;
+    }
+    
+    public boolean isOneAddAway(String shortStr, String longStr) {
+        if(longStr.length() - shortStr.length() > 1) return false;
+        int i = 0; 
+        int j = 0;
+        while(i < shortStr.length()) {
+            if(shortStr.charAt(i) != longStr.charAt(j)) {
+                if(i == j) i--;
+                else return false;
+            } 
+            i++;
+            j++;
+        }
+        return true;
+    }
+}
