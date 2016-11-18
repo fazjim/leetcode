@@ -1,0 +1,25 @@
+public class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int positive = 0;
+        int max = nums.length;
+        int i = 0;
+        while(i < max) {
+            int val = nums[i] - 1;
+            if(val == i) {
+                i++;
+            } else if(nums[i] > max || nums[i] <= i || nums[i] == nums[val]) {
+                max--;
+                nums[i] = nums[max];
+            } else {
+                swap(nums, i, val);
+            }
+        }
+        return i+1;
+    }
+    
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
