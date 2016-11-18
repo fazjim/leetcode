@@ -1,0 +1,21 @@
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        int count = p.length();
+        int[] chars = new int[26];
+        for(int i = 0; i < p.length(); i++) {
+            char c = p.charAt(i);
+            chars[c-'a'] += 1;
+        }
+        List<Integer> result = new ArrayList<Integer>();
+        int start = 0;
+        int end = 0;
+        while(end < s.length()) {
+            if(chars[s.charAt(end++)-'a']-- >= 1) count--;
+            if(count == 0) {
+                result.add(start);
+            }
+            if(end - start == p.length() && chars[s.charAt(start++) - 'a']++ >= 0) count++;
+        }
+        return result;
+    }
+}
