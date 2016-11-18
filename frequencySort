@@ -1,0 +1,44 @@
+public class Solution {
+    public String frequencySort(String s) {
+        HashMap<Character, Integer> counts = new HashMap<Character, Integer>();
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(!counts.containsKey(c)) {
+                counts.put(c, 1);
+            } else {
+                counts.put(c, counts.get(c) + 1);
+            }
+        }
+        
+        Iterator<Character> it = counts.keySet().iterator();
+        PriorityQueue<Node> pq = new PriorityQueue<Node>();
+        while(it.hasNext()) {
+            char c = it.next();
+            pq.offer(new Node(c, counts.get(c)));
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while(pq.size() > 0) {
+            Node n = pq.poll();
+            int freq = n.freq;
+            for(int i = 0; i < freq; i++) {
+                sb.append(n.c);
+            }
+        }
+        return sb.toString();
+    }
+    
+    class Node implements Comparable<Node>{
+        char c;
+        int freq;
+        
+        Node(char c, int freq) {
+            this.c = c;
+            this.freq = freq;
+        }
+        
+        public int compareTo(Node n) {
+            return  n.freq - this.freq;
+        }
+    }
+}
