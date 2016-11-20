@@ -1,0 +1,22 @@
+public class Solution {
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int startG = 0;
+        int startS = 0;
+        int num = 0;
+        while(startG < g.length) {
+            while(startS < s.length && g[startG] > s[startS] ) {
+                startS++;
+            }
+            if(startS < s.length) {
+                startG++;
+                startS++;
+                num++;
+            } else {
+                break;
+            }
+        }
+        return num;
+    }
+}
