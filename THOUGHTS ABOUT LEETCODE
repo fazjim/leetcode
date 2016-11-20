@@ -53,3 +53,4 @@ Binary Indexed Tree
 46. for finding consecutive solutions, for loop, find index,  if([index] == [index-1]) continue;
 47. WordWrap: Minimum number of lines (Greedy, keep putting until ends), minimum raggedness (dp)
 48. Use bucket sort when requires O(N) but it seems to require sorting
+49. For modifying n-1 elements at the same time, think about the reverse by choosing one 
