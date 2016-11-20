@@ -1,0 +1,38 @@
+public class Solution {
+    public int islandPerimeter(int[][] grid) {
+        int r = grid.length;
+        int c = grid[0].length;
+        boolean[][] visited = new boolean[r][c];
+        for(int i = 0; i < r; i++) {
+            for(int j = 0; j < c; j++) {
+                if(grid[i][j] == 1) {
+                    return helper(visited, grid, i, j);
+                }   
+            }
+        }
+        return 0;
+    }
+    
+    public int helper(boolean[][] visited, int[][] grid, int i, int j) {
+        int[][] directions = {{0,1},{0,-1}, {-1,0},{1,0}};
+        visited[i][j] = true;
+        int perimeter = 0;
+        for(int[] direction: directions) {
+            int newI = i + direction[0];
+            int newJ = j + direction[1];
+            if(newI < 0 || newI >= grid.length) {
+                perimeter += 1;
+            } else if(newJ < 0 || newJ >= grid[0].length){
+                perimeter += 1;
+            } else {
+                if(grid[newI][newJ] == 0) perimeter += 1;
+                else {
+                    if(!visited[newI][newJ]) {
+                        perimeter += helper(visited, grid, newI, newJ);
+                    }
+                }
+            }
+        }
+        return perimeter;
+    }
+}
