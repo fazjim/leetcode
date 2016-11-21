@@ -46,3 +46,57 @@ public class Solution {
         return lookup;
     }
 }
+
+//v2
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle.length() == 0) {
+            return 0;
+        }
+        int i = 0;
+        int j = 0;
+        int[] prefixTable = countPrefix(needle);
+        while(i < haystack.length()) {
+            if(haystack.charAt(i) == needle.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                if(j > 0) {
+                    j = prefixTable[j];
+                } else {
+                    j = 0;
+                    i++;
+                }
+            }
+            if(j == needle.length()) {
+                return i - needle.length();
+            }
+        }
+        return -1;
+    }
+    
+    
+    public int[] countPrefix(String needle) {
+        int[] prefixTable = new int[needle.length() + 1];
+        prefixTable[0] = -1;
+        prefixTable[1] = 0;
+        int index = 2;
+        int prefix = 0;
+        while(index <= needle.length()) {
+            if(needle.charAt(index-1) == needle.charAt(prefix)) {
+                prefix++;
+                prefixTable[index] = prefix;
+                index++;
+            } else {
+                if(prefix > 0) {
+                   prefix = prefixTable[prefix]; 
+                } else {
+                    prefix = 0;
+                    prefixTable[index] = 0;
+                    index++;
+                }
+            }
+        }
+        return prefixTable;
+    }
+}
