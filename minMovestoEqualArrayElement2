@@ -1,0 +1,36 @@
+public class Solution {
+    public int minMoves2(int[] nums) {
+        int mid = findKth(nums, (nums.length + 1)/2, 0, nums.length-1);
+        int sum = 0;
+        for(int num: nums) {
+            sum += Math.max(num - mid, mid-num);
+        }
+        return sum;
+    }
+    
+    public int findKth(int[] nums, int k, int start, int end) {
+        int pivot = nums[end];
+        int small = start;
+        for(int i = start; i < end; i++) {
+            if(nums[i] < pivot) {
+                swap(nums, i, small);
+                small++;
+            }
+        }
+        swap(nums, end, small);
+        int sorted = small - start + 1;
+        if(sorted > k) {
+            return findKth(nums, k, start, small-1);
+        } else if(sorted < k) {
+            return findKth(nums, k - sorted, small+1, end);
+        } else {
+            return nums[small];
+        }
+    }
+    
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
