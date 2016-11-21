@@ -55,3 +55,37 @@ public class Solution {
         }
     }
 }
+
+//v2
+public class Solution {
+    public int numberOfBoomerangs(int[][] points) {
+        HashMap<Integer, Integer> freq = new HashMap<Integer, Integer>();
+        int count = 0;
+        for(int i = 0; i < points.length; i++) {
+            freq.clear();
+            for(int j = 0; j < points.length; j++) {
+                if(i != j) {
+                    int d = calcDist(points[i], points[j]);
+                    if(freq.containsKey(d)) {
+                        freq.put(d, freq.get(d) + 1);
+                    } else {
+                        freq.put(d, 1);
+                    }
+                }
+            }
+            Iterator<Integer> it = freq.keySet().iterator();
+            while(it.hasNext()) {
+                int d = it.next();
+                int val = freq.get(d);
+                count += val * (val - 1);
+            }
+        }
+        return count;
+    }
+    
+    public int calcDist(int[] point1, int[] point2) {
+        int dx = point1[0] - point2[0];
+        int dy = point1[1] - point2[1];
+        return dx*dx + dy*dy;
+    }
+}
