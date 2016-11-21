@@ -1,0 +1,33 @@
+public class Solution {
+    public boolean repeatedSubstringPattern(String str) {
+        int[] lps = countLPS(str);
+        int last = lps[str.length()];
+        if(last == 0) return false;
+        int repeatLength = str.length() - last;
+        if(str.length() % repeatLength == 0) return true;
+        else return false;
+    }
+    
+    public int[] countLPS(String str) {
+        int[] lps = new int[str.length() + 1];
+        lps[0] = -1;
+        lps[1] = 0;
+        int prefix = 0;
+        int index = 2;
+        while(index <= str.length()) {
+            if(str.charAt(index-1) == str.charAt(prefix)) {
+                prefix++;
+                lps[index] = prefix;
+                index++;
+            } else {
+                if(prefix > 0) {
+                    prefix = lps[prefix];
+                } else {
+                    lps[index] = 0;
+                    index++;
+                }
+            }
+        }
+        return lps;
+    }
+}
