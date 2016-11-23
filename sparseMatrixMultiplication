@@ -1,0 +1,56 @@
+public class Solution {
+    public int[][] multiply(int[][] A, int[][] B) {
+        int rowA = A.length;
+        int colA = A[0].length;
+        int rowB = B.length;
+        int colB = B[0].length;
+        int[][] res = new int[rowA][colB];
+        
+        HashMap<Integer, HashMap<Integer, Integer>> aMatrix = buildMatrix(A, true);
+        HashMap<Integer, HashMap<Integer, Integer>> bMatrix = buildMatrix(B, false);
+        
+        for(int i = 0; i < res.length; i++) {
+            for(int j = 0; j < res[0].length; j++) {
+                res[i][j] = calcMulti(aMatrix.get(i), bMatrix.get(j));
+            }
+        }
+        return res;
+    }
+    
+    public HashMap<Integer, HashMap<Integer, Integer>> buildMatrix(int[][] matrix, boolean goRow) {
+        HashMap<Integer, HashMap<Integer, Integer>> valueMatrix = new HashMap<Integer, HashMap<Integer, Integer>>();
+        if(goRow) {
+            for(int i = 0; i < matrix.length; i++) {
+                HashMap<Integer, Integer> rowValues = new HashMap<Integer, Integer>();
+                for(int j = 0; j < matrix[i].length; j++) {
+                    if(matrix[i][j] != 0) {
+                        rowValues.put(j, matrix[i][j]);
+                    }
+                }
+                valueMatrix.put(i, rowValues);
+            }
+        } else {
+            for(int i = 0; i < matrix.length; i++) {
+                for(int j = 0;  j < matrix[i].length; j++) {
+                    if(!valueMatrix.containsKey(j)) {
+                        valueMatrix.put(j, new HashMap<Integer, Integer>());
+                    }
+                    if(matrix[i][j] != 0) valueMatrix.get(j).put(i, matrix[i][j]);
+                }
+            }
+        }
+        return valueMatrix;
+    }
+    
+    public int calcMulti(HashMap<Integer, Integer> valA, HashMap<Integer, Integer> valB) {
+        int sum = 0;
+        Iterator<Integer> it = valA.keySet().iterator();
+        while(it.hasNext()) {
+            int key = it.next();
+            if(valB.containsKey(key)) {
+                sum += valA.get(key) * valB.get(key);
+            }
+        }
+        return sum;
+    }
+}
