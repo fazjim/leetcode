@@ -1,0 +1,25 @@
+public class Solution {
+    public int shortestWordDistance(String[] words, String word1, String word2) {
+        int pos1 = -1;
+        int pos2 = -1;
+        int minGap = Integer.MAX_VALUE;
+        for(int i = 0; i < words.length; i++) {
+            if(words[i].equals(word2)) {
+                if(word1.equals(word2)) {
+                    if(pos2 > pos1) {
+                        pos1 = i;
+                    } else {
+                        pos2 = i;
+                    }
+                } else {
+                    pos2 = i;
+                }
+            } else if(words[i].equals(word1)) {
+                pos1 = i;
+            }
+            if(pos1 >= 0 && pos2 >= 0)
+            minGap = Math.min(minGap, Math.abs(pos2-pos1));
+        }
+        return minGap;
+    }
+}
