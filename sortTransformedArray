@@ -1,0 +1,36 @@
+public class Solution {
+    public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
+         int[] ans = new int[nums.length];
+         int left = 0;
+         int right = nums.length-1;
+         int i = 0;
+         while(left <= right) {
+             int valLeft = calc(a, b, c, nums[left]);
+             int valRight = calc(a, b, c, nums[right]);
+             if(a < 0) {
+                 if(valLeft > valRight) {
+                     ans[i++] = valRight;
+                     right--;
+                 } else {
+                     ans[i++] = valLeft;
+                     left++;
+                 }
+             } else {
+                 if(valLeft > valRight) {
+                     ans[nums.length - 1 - i] = valLeft;
+                     i++;
+                     left++;
+                 } else {
+                     ans[nums.length - 1 - i] = valRight;
+                     i++;
+                     right--;
+                 }
+             }
+         }
+         return ans;
+    }
+    
+    public int calc(int a , int b, int c, int x) {
+        return a * x * x + b * x + c;
+    }
+}
