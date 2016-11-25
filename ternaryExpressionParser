@@ -1,0 +1,23 @@
+public class Solution {
+    public String parseTernary(String expression) {
+        return helper(expression, 0, expression.length()-1);
+    }
+    
+    public String helper(String expression, int start, int end) {
+        if(expression.substring(start, end+1).indexOf("?") == -1) return expression.substring(start, end+1);
+        int choice = expression.charAt(start);
+        int q = 1;
+        int index = start + 2;
+        while(index <= end) {
+            if(expression.charAt(index) == '?') q++;
+            else if(expression.charAt(index) == ':') q--;
+            if(q == 0) break;
+            index++;
+        }
+        if(choice == 'T') {
+            return helper(expression, start+2, index-1);
+        } else {
+            return helper(expression, index+1, end);
+        }
+    }
+}
