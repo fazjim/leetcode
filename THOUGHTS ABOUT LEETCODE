@@ -55,3 +55,4 @@ Binary Indexed Tree
 48. Use bucket sort when requires O(N) but it seems to require sorting
 49. For modifying n-1 elements at the same time, think about the reverse by choosing one 
 50. Bucket sort or put min and max in an average bucket to calculate max gap
+51. Overlap of intervals, sorting and keep updating the min and max
