@@ -1,0 +1,22 @@
+public class Solution {
+    public int jump(int[] nums) {
+        int start = 0;
+        if(nums.length < 2) return 0;
+        int jump = 1;
+        while(true) {
+            int steps = nums[start];
+            if(start + steps >= nums.length-1) return jump;
+            int max = start;
+            int nextStart = start;
+            for(int i = 1; i <= steps; i++) {
+                int next = start + i;
+                if(next + nums[next] > max) {
+                    max = next + nums[next];
+                    nextStart = next;
+                }
+            }
+            start = nextStart;
+            jump ++;
+        }
+    }
+}
