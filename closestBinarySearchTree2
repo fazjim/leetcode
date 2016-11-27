@@ -1,0 +1,64 @@
+//O(n) solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Integer> closestKValues(TreeNode root, double target, int k) {
+        List<Integer> all = new ArrayList<Integer>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        while(stack.size() > 0 || root != null) {
+            if(root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                root = stack.pop();
+                all.add(root.val);
+                root = root.right;
+            }
+        }
+        
+        int pointer2 = binarySearch(all, 0, all.size()-1, target);
+        int pointer1 = pointer2-1;
+        if(pointer2 >= 0 && all.get(pointer2) < target) {
+            pointer1 = pointer2;
+            pointer2++;
+        }
+        List<Integer> res = new ArrayList<Integer>();
+        while(res.size() < k) {
+            if(pointer1 < 0) {
+                res.add(all.get(pointer2));
+                pointer2++;
+            } else if(pointer2 >= all.size()) {
+                res.add(all.get(pointer1));
+                pointer1--;
+            } else {
+                if(target - all.get(pointer1) < all.get(pointer2) - target) {
+                    res.add(all.get(pointer1));
+                    pointer1--;
+                } else {
+                    res.add(all.get(pointer2));
+                    pointer2++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    public int binarySearch(List<Integer> all, int begin, int end, double target) {
+        if(begin >= end) return begin;
+        int mid = (begin + end) / 2;
+        if(all.get(mid) == target) {
+            return mid;
+        } else if(all.get(mid) < target) {
+            return binarySearch(all, mid + 1, end, target);
+        } else {
+            return binarySearch(all, begin, mid-1, target);
+        }
+    }
+}
