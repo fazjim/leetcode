@@ -57,3 +57,4 @@ Binary Indexed Tree
 50. Bucket sort or put min and max in an average bucket to calculate max gap
 51. Overlap of intervals, sorting and keep updating the min and max, interval maximum nonoverlapping(https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pearson/04GreedyAlgorithms-2x2.pdf)
 52. Pick max k or min k, use a stack based approach
+53. Calculator problem, use a stack, record sign, number, result
