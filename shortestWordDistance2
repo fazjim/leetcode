@@ -1,0 +1,41 @@
+public class WordDistance {
+    HashMap<String, List<Integer>> indexes = new HashMap<String, List<Integer>>();
+    public WordDistance(String[] words) {
+        int index = 0;
+        for(String word: words) {
+            if(!indexes.containsKey(word)) {
+                indexes.put(word, new ArrayList<Integer>());
+            }
+            indexes.get(word).add(index);
+            index++;
+        }
+    }
+
+    public int shortest(String word1, String word2) {
+        List<Integer> word1Indexes = indexes.get(word1);
+        List<Integer> word2Indexes = indexes.get(word2);
+        
+        int cursor1 = 0;
+        int cursor2 = 0;
+        int shortestDistance = Integer.MAX_VALUE;
+        while(cursor1 < word1Indexes.size() && cursor2 < word2Indexes.size()) {
+            int index1 = word1Indexes.get(cursor1);
+            int index2 = word2Indexes.get(cursor2);
+            if(index1 < index2) {
+                shortestDistance = Math.min(shortestDistance, index2-index1);
+                cursor1++;
+                //if(cursor1 >= word1Indexes.size()) break;
+            } else {
+                shortestDistance = Math.min(shortestDistance, index1-index2);
+                cursor2++;
+                //if(cursor2 >= word2Indexes.size()) break;
+            }
+        }
+        return shortestDistance;
+    }
+}
+
+// Your WordDistance object will be instantiated and called as such:
+// WordDistance wordDistance = new WordDistance(words);
+// wordDistance.shortest("word1", "word2");
+// wordDistance.shortest("anotherWord1", "anotherWord2");
